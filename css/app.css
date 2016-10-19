@@ -1,0 +1,10 @@
+.top-bar, .top-bar ul {
+    background-color: #d2e9ec;
+}
+
+.datos{
+	font-family: "Times New Roman";
+	font-size:100%;
+	color: black;
+	text-align: right;	
+}
