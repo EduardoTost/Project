@@ -27,16 +27,19 @@ prx.types.metro_button = {
 
 		var cR = "";
 
-		cR = cR + '<div id="' + _id + '" class="pos box type-metro-button">';
-		cR += '<style>'
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-button">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-button { background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; li!ne-height: '+(_dims.height-prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*2)+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
-		cR = cR + '<div class="metro-button-table">'
-		cR = cR + '<div class="metro-button liveUpdate-backgroundColor liveUpdate-textColor liveUpdate-borderColor changeProperty-text changeProperty-backgroundColor changeProperty-textAlign changeProperty-textFont changeProperty-textColor changeProperty-textSize changeProperty-borderWidth changeProperty-borderColor">'
-		cR = cR + '<span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span>';
-		cR = cR + '</div>';
-		cR = cR + '</div>';
+		cR += '<div class="metro-button-table">'
+		cR += '<div class="metro-button liveUpdate-backgroundColor liveUpdate-textColor liveUpdate-borderColor changeProperty-text changeProperty-backgroundColor changeProperty-textAlign changeProperty-textFont changeProperty-textColor changeProperty-textSize changeProperty-borderWidth changeProperty-borderColor">'
+		cR += '<span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span>';
+		cR += '</div>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR = cR + '</div>';
 		return cR;
 	}
@@ -84,13 +87,16 @@ prx.types.metro_icon = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-icon">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-icon">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-icon { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; background-image: url(' +prx.componentsHelper.getProp(item.imgSrc,'asset')+'); }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR = cR + '<div class="metro-icon liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderWidth changeProperty-borderColor"></div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR = cR + '</div>';
 		return cR;
 	}
@@ -150,14 +156,17 @@ prx.types.metro_badge = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-badge">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-badge">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-badge-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }'
 		if(prx.componentsHelper.getProp(item.badgeType,'other') == 'glyph') {
 			cR += '#'+_id+' .metro-badge-inner { background-image: url(' +prx.componentsHelper.getProp(item.badgeGlyph,'asset')+'); }'
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+
 		cR += '<div class="metro-badge-inner liveUpdate-backgroundColor liveUpdate-textColor chagneProperty-backgroundColor changeProperty-textFont changeProperty-textColor changeProperty-textSize">'
 		if(prx.componentsHelper.getProp(item.badgeType,'other') == 'number') {
 			cR += '<div class="metro-badge">'
@@ -165,6 +174,7 @@ prx.types.metro_badge = {
 			cR += '</div>';
 		}
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -341,11 +351,13 @@ prx.types.metro_tile_user = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-tile type-metro-tile-user">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-tile type-metro-tile-user">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-tile-user-inner { color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+';  }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-tile-user-inner liveUpdate-textColor">';
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
@@ -354,6 +366,7 @@ prx.types.metro_tile_user = {
 		cR += '<div class="metro-tile-user-title"><span data-editableproperty="username">'+prx.componentsHelper.getProp(item.username,'text-textarea')+'</span></div>'
 		cR += '<div class="metro-tile-user-text"><span data-editableproperty="surname">'+prx.componentsHelper.getProp(item.surname,'text-textarea')+'</span></div>'
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -462,13 +475,19 @@ prx.types.metro_tile_systeminfo = {
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-tile type-metro-tile-systeminfo">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-tile type-metro-tile-systeminfo">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+
 		cR += '<div class="tile-systeminfo-inner">'
 		cR += '<div class="tile-systeminfo-icons"><div class="tile-systeminfo-icon-one"></div><div class="tile-systeminfo-icon-two"></div></div>'
 		cR += '<div class="tile-systeminfo-time">'+now.getHours()+':'+('0' + now.getMinutes()).slice(-2)+'</div>';
 		cR += '<div class="tile-systeminfo-day">'+days[now.getDay()]+'</div>';
 		cR += '<div class="tile-systeminfo-date">'+months[now.getMonth()]+' '+now.getDate()+'</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -489,13 +508,15 @@ prx.types.metro_appbar = {
 
 		var cR = "";
 
-		cR = cR + '<div id="' + _id + '" class="pos box type-metro-appbar ">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-appbar ">';
 
-		cR += '<style>'
-		cR += '#'+_id+' .metro-appbar-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-backgrounds')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '#'+_id+' .metro-appbar-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
 		cR += '#'+_id+' .metro-appbar-button-icon { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }';
 		cR += '#'+_id+' .metro-appbar-separator { background-color: '+prx.componentsHelper.getProp(item.borderColor,'color-background')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-appbar-inner liveUpdate-backgroundColor changeProperty-backgroundColor liveUpdate-textColor changeProperty-textColor changeProperty-textSize changeProperty-textFont">'
 		$.each(item.buttons, function(i,elm){
@@ -509,6 +530,7 @@ prx.types.metro_appbar = {
 			}
 		});
 		cR = cR + '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR = cR + '</div>';
 		return cR;
 	}
@@ -681,13 +703,15 @@ prx.types.metro_appbar_mini = {
 
 		var cR = "";
 
-		cR = cR + '<div id="' + _id + '" class="pos box type-metro-appbar-mini">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-appbar-mini">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-appbar-mini-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#'+_id+' .metro-appbar-button { width: '+(_dims.height - (20*prx.componentsHelper.getScale(item.lib))) +'px; }';
 		cR += '#'+_id+' .metro-appbar-button-icon { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-appbar-mini-inner liveUpdate-backgroundColor changeProperty-backgroundColor">'
 		$.each(item.buttons, function(i,elm){
@@ -695,8 +719,9 @@ prx.types.metro_appbar_mini = {
 			cR += '<div class="metro-appbar-button-icon liveUpdate-borderColor changeProperty-borderWidth changeProperty-borderColor" style="background-image: url(' +prx.componentsHelper.getProp(elm.icon,'asset')+');"></div>';
 			cR += '</div>'
 		});
-		cR = cR + '</div>';
-		cR = cR + '</div>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,onResize: function(item,containerid,pageid,symbol) {
@@ -797,11 +822,13 @@ prx.types.metro_charms = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-charms">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-charms">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-charms-outer { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-charms-outer liveUpdate-backgroundColor liveUpdate-textColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textSize changeProperty-textFont">'
 		cR += '<div class="metro-charms-inner">'
@@ -811,8 +838,9 @@ prx.types.metro_charms = {
 				cR += '<span data-editableproperty="text" data-dynamic-property-index="'+i+'">'+prx.componentsHelper.getProp(elm.text,'text-textarea')+'</span>'
 				cR += '</div>'
 		});
-		cR += '</div>'
 		cR += '</div>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -933,13 +961,15 @@ prx.types.metro_filters = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-filters liveUpdate-textColor changeProperty-textColor changeProperty-textFont changeProperty-textSize">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-filters liveUpdate-textColor changeProperty-textColor changeProperty-textFont changeProperty-textSize">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
 		cR += '#'+_id+' .metro-filter { margin-right: '+prx.componentsHelper.getProp(item.textSize,'num-other')+'px; }'
 		cR += '#'+_id+' input:checked + label {'+_activeprops+' color: '+prx.componentsHelper.getProp(item.activeTextColor,'color-text')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		$.each(item.buttons, function(i,elm){
 			cR += '<div class="metro-filter dynamic-property" data-dynamic-property-index="'+i+'" id="'+_id+'-buttons-'+i+'">';
@@ -950,6 +980,7 @@ prx.types.metro_filters = {
 		});
 		//cR += '</div>'
 		//cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1106,11 +1137,13 @@ prx.types.metro_contextmenu = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-contextmenu liveUpdate-textColor liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textFont changeProperty-textSize changeProperty-textAlign changeProperty-borderWidth changeProperty-borderColor">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-contextmenu liveUpdate-textColor liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textFont changeProperty-textSize changeProperty-textAlign changeProperty-borderWidth changeProperty-borderColor">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		$.each(item.buttons, function(i,elm){
 			cR += '<div class="metro-contextmenu-item dynamic-property" data-dynamic-property-index="'+i+'" id="'+_id+'-buttons-'+i+'">';
@@ -1118,6 +1151,7 @@ prx.types.metro_contextmenu = {
 			cR = cR + '<span data-editableproperty="text" data-dynamic-property-index="'+i+'">'+ prx.componentsHelper.getProp(elm.text,'text-textarea') + '</span>';
 			cR += '</div>'
 		});
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1210,15 +1244,17 @@ prx.types.metro_dropdown_withselection = {
 		var cR = "";
 		var _checked = '';
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-dropdown">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-dropdown">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .dropdown-trigger { '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; background-image: url('+prx.componentsHelper.getProp(item.buttonicon,'asset')+'); }';
 		cR += '#'+_id+' .metro-dropdown-contextmenu { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+prx.componentsHelper.getProp(item.dropdownTextFont,'font-family')+' '+_dropdownprops+' color: '+prx.componentsHelper.getProp(item.dropdownTextColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.dropdownTextSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.dropdownTextAlign,'align')+'; }';
 		if(prx.componentsHelper.getProp(item.withSelection,'boolean')) {
 			cR += '#'+_id+' .metro-dropdown-item.active, #'+_id+' .metro-dropdown-active-value { color: '+prx.componentsHelper.getProp(item.activeTextColor,'color-text')+'; '+_activeprops+' }'
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="dropdown-trigger liveUpdate-textColor">'
 		cR += '<span data-editableproperty="text">'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span>';
@@ -1239,6 +1275,7 @@ prx.types.metro_dropdown_withselection = {
 			cR += '</div>'
 		});
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1655,13 +1692,15 @@ prx.types.metro_dialog = {
 		var cText = "";
 		var cButtons = ""
 
-		cR += '<div id="' + _id + '" class="pos liveUpdate-backgroundColor liveUpdate-textColor box type-metro-dialog type-metro-dialog-'+prx.componentsHelper.getProp(item.alertType,'other')+' changeProperty-backgroundColor changeProperty-textFont changeProperty-textColor changeProperty-textSize changeProperty-textAlign">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos liveUpdate-backgroundColor liveUpdate-textColor type-metro-dialog type-metro-dialog-'+prx.componentsHelper.getProp(item.alertType,'other')+' changeProperty-backgroundColor changeProperty-textFont changeProperty-textColor changeProperty-textSize changeProperty-textAlign">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';  '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; }';
 		cR += '#'+_id+' .type-metro-dialog-inner { border: '+prx.componentsHelper.getProp(item.buttonBorderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.buttonBorderColor,'color-border')+'; }'
 		cR += '#'+_id+' .metro-dialog-button { border: '+prx.componentsHelper.getProp(item.buttonBorderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.buttonBorderColor,'color-border')+'; background: '+prx.componentsHelper.getProp(item.buttonBackgroundColor,'color-background')+'; color: '+prx.componentsHelper.getProp(item.buttonTextColor,'color-text')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="type-metro-dialog-inner liveUpdate-buttonBorderColor">';
 
@@ -1684,6 +1723,7 @@ prx.types.metro_dialog = {
 		}
 
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1871,11 +1911,13 @@ prx.types.metro_toast_mini = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-toast-mini">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-toast-mini">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-toast-mini-inner { line-height: '+_dims.height+'px; background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';  '+prx.componentsHelper.getProp(item.textFont,'font-family')+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px;  }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-toast-mini-inner liveUpdate-backgroundColor liveUpdate-textColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textFont changeProperty-textSize">'
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
@@ -1884,6 +1926,7 @@ prx.types.metro_toast_mini = {
 		cR += '<span class="toast-title"> <span data-editableproperty="title">'+prx.componentsHelper.getProp(item.title,'text-textarea')+'</span></span>';
 		cR += '<span class="toast-text"> <span data-editableproperty="text">'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span></span>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1984,14 +2027,16 @@ prx.types.metro_toast = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-toast">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-toast">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-toast-inner { background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';  '+prx.componentsHelper.getProp(item.textFont,'font-family')+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px;  }';
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
 			cR += '#'+_id+' .toast-icon { background-image:  url('+prx.componentsHelper.getProp(item.imgSrc,'asset')+'); }'
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		if(prx.componentsHelper.getProp(item.thumb.fileId,'other') != '') {
 			cR += '<div class="toast-thumb">'
@@ -2007,6 +2052,7 @@ prx.types.metro_toast = {
 		cR += '<div class="toast-title" data-editableproperty="title">'+prx.componentsHelper.getProp(item.title,'text-textarea')+'</div>';
 		cR += '<div class="toast-text"><span data-editableproperty="text">'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span></div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2145,12 +2191,14 @@ prx.types.metro_tile_plain = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-tile type-metro-tile-plain liveUpdate-backgroundColor changeProperty-backgroundColor">'
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-tile type-metro-tile-plain liveUpdate-backgroundColor changeProperty-backgroundColor">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
-		cR += '</style>'
-
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2180,9 +2228,10 @@ prx.types.metro_tile_icon = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-tile type-metro-tile-icon">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-tile type-metro-tile-icon">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-tile-icon-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';  '+prx.componentsHelper.getProp(item.textFont,'font-family')+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px;  }';
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
 			cR += '#'+_id+' .metro-tile-icon-inner { background-image:  url('+prx.componentsHelper.getProp(item.imgSrc,'asset')+'); }'
@@ -2193,7 +2242,8 @@ prx.types.metro_tile_icon = {
 		if(prx.componentsHelper.getProp(item.badgeType,'other') == 'glyph') {
 			cR += '#'+_id+' .metro-tile-badge { background-image:  url('+prx.componentsHelper.getProp(item.badgeGlyph,'asset')+'); }'
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-tile-icon-inner liveUpdate-backgroundColor liveUpdate-textColor">';
 		cR += '<div class="metro-tile-branding metro-tile-branding-'+prx.componentsHelper.getProp(item.brandingType,'other')+'">'
@@ -2207,6 +2257,7 @@ prx.types.metro_tile_icon = {
 		}
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2500,9 +2551,11 @@ prx.types.metro_tile_image = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-tile type-metro-tile-image'+(prx.componentsHelper.getProp(item.withCaption,'boolean') ? ' type-metro-tile-image-withcaption' : '') +'">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-tile type-metro-tile-image'+(prx.componentsHelper.getProp(item.withCaption,'boolean') ? ' type-metro-tile-image-withcaption' : '') +'">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+
 		cR += '#'+_id+' .metro-tile-image-inner { '+prx.componentsHelper.getProp(item.textFont,'font-family')+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px;  }';
 		cR += '#'+_id+' .metro-tile-badge, #'+_id+' .metro-tile-caption { background-color: '+prx.componentsHelper.getProp(item.badgeBackgroundColor,'color-background')+'; }';
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
@@ -2514,7 +2567,8 @@ prx.types.metro_tile_image = {
 		if(prx.componentsHelper.getProp(item.badgeType,'other') == 'glyph') {
 			cR += '#'+_id+' .metro-tile-badge { background-image:  url('+prx.componentsHelper.getProp(item.badgeGlyph,'asset')+'); }'
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-tile-image-inner">';
 		if(prx.componentsHelper.getProp(item.withCaption,'boolean')) {
@@ -2540,6 +2594,7 @@ prx.types.metro_tile_image = {
 			cR += '</div>'
 		}
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2881,9 +2936,10 @@ prx.types.metro_tile_text = {
 
 		var cR = "";
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-tile type-metro-tile-text">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-tile type-metro-tile-text">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .metro-tile-text-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';  '+prx.componentsHelper.getFontCssFromFontFamily(item.textFont)+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+item.textSize+'px;  }';
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
 			cR += '#'+_id+' .metro-tile-text-image { background-image:  url('+prx.componentsHelper.getProp(item.imgSrc,'asset')+'); }'
@@ -2894,7 +2950,8 @@ prx.types.metro_tile_text = {
 		if(prx.componentsHelper.getProp(item.badgeType,'other') == 'glyph') {
 			cR += '#'+_id+' .metro-tile-badge { background-image:  url('+prx.componentsHelper.getProp(item.badgeGlyph,'asset')+'); }'
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="metro-tile-text-inner liveUpdate-backgroundColor liveUpdate-textColor">';
 		if(prx.componentsHelper.getProp(item.imgSrc.fileId,'other') != '') {
@@ -2913,6 +2970,7 @@ prx.types.metro_tile_text = {
 		}
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3213,12 +3271,14 @@ prx.types.metro_textfield = {
 
 		var _dims = prx.componentsHelper.getRealDims(item,symbol);
 
-		cR += '<div id="' + _id + '" class="box pos type-metro-textfield type-metro-textfield-'+prx.componentsHelper.getProp(item.inputtype,'other')+'">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-textfield type-metro-textfield-'+prx.componentsHelper.getProp(item.inputtype,'other')+'">';
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' input:-moz-placeholder { color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'!important; }'
 		cR += '#'+_id+' input::-moz-placeholder { color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'!important; }'
 		cR += '#'+_id+' input::-webkit-input-placeholder { color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'!important; }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		if(prx.editor) {
 			cR += '<div class="faux-input liveUpdate-textColor liveUpdate-borderColor liveUpdate-backgroundColor" data-editableproperty="value"  style="color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; '+ _props + '; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; line-height: '+(_dims.height-parseInt(prx.componentsHelper.getProp(item.borderWidth,'num-border-width'))*2)+'px;">'+prx.componentsHelper.getProp(item.value,'text')+'</div>';
@@ -3226,6 +3286,7 @@ prx.types.metro_textfield = {
 		} else {
 			cR += '<input type="'+prx.componentsHelper.getProp(item.inputtype,'other')+'" value="'+prx.componentsHelper.getProp(item.value,'other')+'" placeholder="'+prx.componentsHelper.getProp(item.placeholder,'other')+'" data-role="none" class="real-input changeProperty-backgroundColor changeProperty-textSize changeProperty-textColor changeProperty-textFont changeProperty-borderWidth changeProperty-borderColor changeProperty-textAlign" style="color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; '+ _props + '; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+';" />'
 		}
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3388,18 +3449,21 @@ prx.types.metro_textarea = {
 		var _dims = prx.componentsHelper.getRealDims(item,symbol);
 
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-metro-textarea">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-textarea">';
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' textarea:-moz-placeholder { color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'!important; }'
 		cR += '#'+_id+' textarea::-moz-placeholder { color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'!important; }'
 		cR += '#'+_id+' textarea::-webkit-input-placeholder { color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'!important; }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		if(prx.editor) {
 			cR += '<div class="faux-input liveUpdate-textColor liveUpdate-borderColor liveUpdate-backgroundColor" data-editableproperty="value"  style="color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; '+ _props + '; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+';">'+prx.componentsHelper.getProp(item.value,'text-textarea')+'</div>';
 			cR += '<div class="faux-input placeholder-input liveUpdate-placeholderColor liveUpdate-borderColor liveUpdate-backgroundColor"  style="color: '+prx.componentsHelper.getProp(item.placeholderColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; '+ _props + '; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+';">'+prx.componentsHelper.getProp(item.placeholder,'other')+'</div>'
 		} else {
 			cR += '<textarea class="changeProperty-textColor changeProperty-textSize changeProperty-textFont changeProperty-backgroundColor changeProperty-textAlign changeProperty-borderWidth changeProperty-borderColor liveUpdate-placeholderColor liveUpdate-textColor liveUpdate-borderColor liveUpdate-backgroundColor" placeholder="'+prx.componentsHelper.getProp(item.placeholder,'other')+'" style="color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; '+ _props + '; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+';" data-role="none">'+prx.componentsHelper.getProp(item.value,'text-textarea').replace(/<br \/>/g, "\n")+'</textarea>';
 		}
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3467,14 +3531,17 @@ prx.types.metro_radiobutton = {
 		var _type = (prx.componentsHelper.getProp(item.actAsCheckbox,'boolean')) ? 'checkbox' : 'radio';
 
 
-		cR += '<div id="' + _id + '" class="box pos type-metro-radio">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-radio">';
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' label { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
 		cR += '#'+_id+' label span { background-color: '+prx.componentsHelper.getProp(item.activeColor,'color-background')+'; }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<input type="'+_type+'" '+_active+ ' id="'+_id+'-checkbox" data-role="none"  />';
 		cR += '<label class="liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderWidth changeProperty-borderColor" for="'+_id+'-checkbox" data-clickable="true"><span  class="liveUpdate-activeColor changeProperty-activeColor"></span></label>';
 
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3613,13 +3680,16 @@ prx.types.metro_checkbox = {
 		var _active = "";
 		if(prx.componentsHelper.getProp(item.active,'boolean')) { _active = 'checked="checked"'; }
 
-		cR += '<div id="' + _id + '" class="box pos type-metro-checkbox">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-checkbox">';
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' label { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
 		cR += '#'+_id+' label span { color: '+prx.componentsHelper.getProp(item.activeColor,'color-text')+'; font-size: '+(prx.componentsHelper.getProp(item.height,'num-other')-prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*2)+'px; }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<input type="checkbox" id="'+_id+'-checkbox" '+_active+' data-role="none"/>';
 		cR += '<label for="'+_id+'-checkbox" class="liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderWidth changeProperty-borderColor" data-clickable="true"><span class="liveUpdate-activeColor changeProperty-activeColor">&#10004;</span></label>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3750,14 +3820,16 @@ prx.types.metro_onoff = {
 			_active = 'checked="checked"';
 		}
 
-		cR += '<div id="' + _id + '" class="box pos type-metro-onoff">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-onoff">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' label { border-color: '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
 		cR += '#'+_id+' .activelabel { background-color: '+prx.componentsHelper.getProp(item.activeLabelColor,'color-background')+'; }'
 		cR += '#'+_id+' .inactivelabel { background-color: '+prx.componentsHelper.getProp(item.inactiveLabelColor,'color-background')+'; }'
 		cR += '#'+_id+' .switch { right: '+(prx.componentsHelper.getProp(item.width,'num-other')*0.8)+'px; background-color: '+prx.componentsHelper.getProp(item.switchColor,'color-background')+'; }'
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<input type="checkbox" '+_active+ ' id="'+_id+'-flipswitch" data-role="none" />';
 		cR += '<label for="'+_id+'-flipswitch" class="liveUpdate-borderColor" data-clickable="true">';
@@ -3767,6 +3839,7 @@ prx.types.metro_onoff = {
 		cR += '</div>';
 		cR += '<span class="switch liveUpdate-switchColor"></span>';
 		cR += '</label>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3952,9 +4025,10 @@ prx.types.metro_slider = {
 
 		var _dims = prx.componentsHelper.getRealDims(item, symbol);
 
-		cR += '<div id="' + _id + '" class="box pos type-metro-slider '+((prx.componentsHelper.getProp(item.vertical,'boolean')) ? 'type-slider-vertical' : '')+'">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-slider '+((prx.componentsHelper.getProp(item.vertical,'boolean')) ? 'type-slider-vertical' : '')+'">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 
 		if(Number(prx.componentsHelper.getProp(item.sliderLeft,'num-percentage')) > Number(prx.componentsHelper.getProp(item.sliderRight,'num-percentage'))) {
 			var _temp = prx.componentsHelper.getProp(item.sliderLeft,'num-percentage');
@@ -3979,7 +4053,8 @@ prx.types.metro_slider = {
 				cR += '#' + _id + ' .slider-button-min { ' + ((item.sliderLeft == 100) ? 'right: 0;' : 'left: ' + prx.componentsHelper.getProp(item.sliderLeft,'num-percentage') + '%;') + ' }'
 			}
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="slider-bar liveUpdate-barColor" >';
 			cR += '<div class="slider-bar-filled liveUpdate-fillBarColor"></div>'
@@ -3988,6 +4063,7 @@ prx.types.metro_slider = {
 			cR += '<span class="slider-button slider-button-min liveUpdate-sliderColor"></span>';
 		}
 		cR += '<span class="slider-button slider-button-max liveUpdate-sliderColor"></span>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 
@@ -4594,12 +4670,15 @@ prx.types.metro_progress = {
 		var cR = '';
 
 
-		cR += '<div id="' + _id + '" class="box pos type-metro-progress liveUpdate-barColor">';
-		cR += '<style>'
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-progress liveUpdate-barColor">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { background-color: '+prx.componentsHelper.getProp(item.barColor,'color-background')+';  }'
 		cR += '#'+_id+' .slider-bar-filled { right: '+(100-prx.componentsHelper.getProp(item.progress,'num-percentage'))+'%; background-color: '+prx.componentsHelper.getProp(item.fillBarColor,'color-fill')+' }'
-		cR += '</style>'
-		cR += '<div class="slider-bar-filled liveUpdate-fillBarColor"></div>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div class="slider-bar-filled liveUpdate-fillBarColor"></div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -4675,14 +4754,16 @@ prx.types.metro_select = {
 		var _checked = '';
 		var _dims = prx.componentsHelper.getRealDims(item, symbol)
 
-		cR += '<div id="' + _id + '" class="pos box type-metro-select liveUpdate-textColor">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-metro-select liveUpdate-textColor">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
 		cR += '#'+_id+' .dropdown-trigger { line-height: '+(_dims.height-prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*2)+'px; }'
 		cR += '#'+_id+' .dropdown-trigger, #'+_id+' .metro-dropdown-contextmenu { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#'+_id+' .dropdown-trigger-icon { width: '+_dims.height+'px; background-image: url('+prx.componentsHelper.getProp(item.buttonicon,'asset')+'); line-height: '+(prx.componentsHelper.getProp(item.height,'num-other')-prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*2)+'px; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="dropdown-trigger liveUpdate-borderColor liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textSize changeProperty-textFont">'
 		cR += '<span class="metro-dropdown-active-value">';
@@ -4695,9 +4776,10 @@ prx.types.metro_select = {
 			cR += '<div class="metro-dropdown-item dynamic-property" data-dynamic-property-index="'+i+'" id="'+_id+'-buttons-'+i+'">';
 			cR += '<div class="error-msg"><span data-editableproperty="text" data-dynamic-property-index="'+i+'">'+prx.componentsHelper.getProp(elm.text,'text-textarea')+'</span></div>'
 
-			cR += '</div>'
+			cR += '</div>';
 		});
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}

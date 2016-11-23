@@ -112,12 +112,14 @@ prx.types.material_tabbar_fixed = {
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-tabbar-fixed" '+((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '')+'>';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-tabbar-fixed" '+((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '')+'>';
 		
-		cR += '<style>';	
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		if(prx.componentsHelper.getProp(item.shadowEnabled,'boolean')) {
 			cR += '#'+_id+' .material-tabbar-fixed-list { box-shadow: 0 '+(1*prx.componentsHelper.getScale(item.lib))+'px '+(3*prx.componentsHelper.getScale(item.lib))+'px '+(1*prx.componentsHelper.getScale(item.lib))+'px '+ prx.componentsHelper.getProp(item.shadowColor,'color-shadow') + '; } ';
 		}
+		cR += '#'+_id+' .material-tabbar-fixed-list { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; } ';
 		cR += '#' + _id + ' .material-tabbar-fixed-list-item { width: '+width+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#' + _id + ' .material-tabbar-fixed-list-item label { font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+'}';
 		cR += '#' + _id + ' .material-tabbar-fixed-list-item-input:checked + label { color: '+prx.componentsHelper.getProp(item.textColorActive,'color-text')+';}';
@@ -128,9 +130,10 @@ prx.types.material_tabbar_fixed = {
 			cR += '#' + _id + ' .material-tabbar-fixed-list-item-input + label { border-bottom: '+prx.componentsHelper.getProp(item.tabIndicatorWidth,'num-border-width')+'px solid transparent; }';
 			cR += '#' + _id + ' .material-tabbar-fixed-list-item-input:checked + label { border-bottom-color: '+prx.componentsHelper.getProp(item.tabIndicatorColor,'color-border')+'; }';
 		}
-		cR += '</style>';		
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
-		cR += '<ul class="material-tabbar-fixed-list liveUpdate-shadowColor changeProperty-shadowColor">';
+		cR += '<ul class="material-tabbar-fixed-list liveUpdate-shadowColor changeProperty-shadowColor liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		
 		$.each(item.tabs, function(i,elm){			
 			if(typeof(elm.linkedscreen) == "undefined") { elm.linkedscreen = -1; }
@@ -150,7 +153,8 @@ prx.types.material_tabbar_fixed = {
 		if(!prx.editor) {
 			cR += '<div class="material-tabbar-fixed-indicator liveUpdate-tabIndicatorColor-background-color changeProperty-tabIndicatorColor-background-color changeProperty-tabIndicatorWidth-height"></div>';
 		}
-		cR += '</div>';		
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,onResize: function(item, containerid) {
@@ -488,9 +492,10 @@ prx.types.material_tabbar_scrollable = {
 		var tabs = prx.componentsHelper.getProp(item.tabs,'text-list').split("<br />");
 
 		var cR = '';		
-		cR += '<div id="'+_id+'" class="box pos type-material-tabbar-scrollable" '+((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '')+'>';		
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-tabbar-scrollable" '+((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '')+'>';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		if(prx.componentsHelper.getProp(item.shadowEnabled,'boolean')) {
 			cR += '#'+_id+' .material-tabbar-scrollable-inner { box-shadow: 0 '+(1*prx.componentsHelper.getScale(item.lib))+'px '+(3*prx.componentsHelper.getScale(item.lib))+'px '+(1*prx.componentsHelper.getScale(item.lib))+'px '+ prx.componentsHelper.getProp(item.shadowColor,'color-shadow') + '; } ';
 		}
@@ -504,8 +509,8 @@ prx.types.material_tabbar_scrollable = {
 			cR += '#' + _id + ' .material-tabbar-scrollable-list-item-input + label { border-bottom: '+prx.componentsHelper.getProp(item.tabIndicatorWidth,'num-border-width')+'px solid transparent; }';
 			cR += '#' + _id + ' .material-tabbar-scrollable-list-item-input:checked + label { border-bottom-color: '+prx.componentsHelper.getProp(item.tabIndicatorColor,'color-border')+ '; }';
 		}
-		cR += '</style>';	
-			
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 			
 		cR += '<div class="material-tabbar-scrollable-inner liveUpdate-backgroundColor changeProperty-backgroundColor" id="' + _id + '-inner">';
 		cR += '<ul class="material-tabbar-scrollable-list liveUpdate-shadowColor changeProperty-shadowColor">';
@@ -527,6 +532,7 @@ prx.types.material_tabbar_scrollable = {
 			cR += '<div class="material-tabbar-scrollable-indicator liveUpdate-tabIndicatorColor-background-color changeProperty-tabIndicatorColor-background-color changeProperty-tabIndicatorWidth-height"></div>';
 		}
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	
@@ -789,15 +795,17 @@ prx.types.material_tabbar_segmented_button = {
 		var width = Math.floor(dims.width/item.tabs.length);
 		
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-tabbar-button" '+((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '')+'>';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-tabbar-button" '+((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '')+'>';
 		
-		cR += '<style>';	
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		if(prx.componentsHelper.getProp(item.shadowEnabled,'boolean')) {
 			cR += '#'+_id+' .material-tabbar-button-list { box-shadow: 0 '+(1*prx.componentsHelper.getScale(item.lib))+'px '+(3*prx.componentsHelper.getScale(item.lib))+'px '+(1*prx.componentsHelper.getScale(item.lib))+'px '+ prx.componentsHelper.getProp(item.shadowColor,'color-shadow') + '; } ';
 		}
 		cR += '#' + _id + ' .material-tabbar-button-list-item { width: '+width+'px; height: '+dims.height+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#' + _id + ' input:checked + label { background-color: '+prx.componentsHelper.getProp(item.backgroundColorActive,'color-background')+'; }';
-		cR += '</style>';		
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<ul class="material-tabbar-button-list liveUpdate-shadowColor changeProperty-shadowColor">';
 		
@@ -817,6 +825,7 @@ prx.types.material_tabbar_segmented_button = {
 				}
 			}
 			cR += '</style>';
+
 			
 			cR += '<li class="material-tabbar-button-list-item liveUpdate-backgroundColor liveUpdate-backgroundColorActive changeProperty-backgroundColor changeProperty-backgroundColorActive dynamic-property '+((prx.componentsHelper.getProp(item.rippleEffect,'boolean')) ? 'prx-material-ripple' : '' )+'" data-dynamic-property-index="'+i+'" id="'+_id+'-tabs-'+i+'" '+((prx.componentsHelper.getProp(elm.linkedscreen,'num-other') != -1) ? 'data-linked-screen="'+prx.componentsHelper.getProp(elm.linkedscreen,'num-other')+'"' : '')+'>';
 			cR += '<input class="material-tabbar-button-list-item-input" type="radio" name="'+_id+'-radio" id="'+_id+'-radio-'+i+'"'+cChecked+' data-role="none" '+((!prx.componentsHelper.getProp(item.changeActive,'boolean')) ? 'disabled' : '')+'/>';
@@ -825,6 +834,7 @@ prx.types.material_tabbar_segmented_button = {
 		});
 		
 		cR += '</ul>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';		
 		return cR;
 	}
@@ -1102,9 +1112,10 @@ prx.types.material_button_raised = {
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 
 		var cR = '';		
-		cR += '<div id="'+_id+'" class="box pos type-material-button '+((prx.componentsHelper.getProp(isround,'boolean')) ? 'button-round' : '') +'">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-button '+((prx.componentsHelper.getProp(isround,'boolean')) ? 'button-round' : '') +'">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#' + _id + ' .material-button-container { background: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		if( prx.componentsHelper.getProp(hastext,'boolean') ) {
 		cR += '#' + _id + ' .material-button-container { '+prx.componentsHelper.getProp(item.textFont,'font-family')+' color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
@@ -1115,6 +1126,7 @@ prx.types.material_button_raised = {
 			}
 		}
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-button-container '+((prx.componentsHelper.getProp(hasshadow,'boolean'))? 'waves-float ' : '')+'liveUpdate-backgroundColor liveUpdate-textColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textFont changeProperty-textSize">';
 
@@ -1128,7 +1140,8 @@ prx.types.material_button_raised = {
 		if(prx.componentsHelper.getProp(item.rippleEffect,'boolean')) {
 			cR += '<div class="material-button-ripple-container prx-material-ripple"></div>';
 		}
-		cR += '</div>'
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1300,23 +1313,25 @@ prx.types.material_actionoverflow = {
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
 		var dims = prx.componentsHelper.getRealDims(item, symbol);
 
-		var cR = '<div id="' + _id + '" class="pos box type-material-actionoverflow prx-material-ripple">';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-actionoverflow prx-material-ripple">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .actionOverflow .AO { width: '+Math.round(dims.height * 0.075)+'px; height: '+Math.round(dims.height * 0.075)+'px; background-color: '+prx.componentsHelper.getProp(item.actionOverflowColor,'color-background')+'; }';	
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		if(prx.componentsHelper.getProp(item.rippleEffect,'boolean')) {
-			cR += '<div class="prx-material-ripple-roundoverflow" />';
+			cR += '<div class="prx-material-ripple-roundoverflow"></div>';
 		}
 
-		cR += '<div class="actionOverflow">'
-		cR += '<div class="AO AO1 liveUpdate-actionOverflowColor changeProperty-actionOverflowColor"></div>'
-		cR += '<div class="AO AO2 liveUpdate-actionOverflowColor changeProperty-actionOverflowColor"></div>'
-		cR += '<div class="AO AO3 liveUpdate-actionOverflowColor changeProperty-actionOverflowColor"></div>'
-		cR += '</div>'
-
-		cR += '</div>'
+		cR += '<div class="actionOverflow">';
+		cR += '<div class="AO AO1 liveUpdate-actionOverflowColor changeProperty-actionOverflowColor"></div>';
+		cR += '<div class="AO AO2 liveUpdate-actionOverflowColor changeProperty-actionOverflowColor"></div>';
+		cR += '<div class="AO AO3 liveUpdate-actionOverflowColor changeProperty-actionOverflowColor"></div>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,onResize: function(item,containerid,pageid,symbol) {
@@ -1377,20 +1392,22 @@ prx.types.material_morphing_lines = {
 		else if(prx.componentsHelper.getProp(item.itemtype,'other') == "lines-arrow") morphClass= 'arrow-left';
 				
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-material-morphing-lines">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-morphing-lines">';
 				
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		if(prx.editor) { 
 			cR += '#' + _id + ' label, #' + _id + ' .lines {  transition: none; }';
 		}
 		cR += '#' + _id + ' .lines:not(.lines-before):not(.lines-after) { width: '+Math.round(dims.width*0.33)+'px; height: '+Math.round(dims.height/22)+'px; }';
 		cR += '#' + _id + ' .lines  { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#' + _id + ' input:checked + label .lines { background-color: '+prx.componentsHelper.getProp(item.backgroundColorActive,'color-background')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 
 		if(prx.componentsHelper.getProp(item.rippleEffect,'boolean')) {
-			cR += '<div class="prx-material-ripple-roundoverflow" />';
+			cR += '<div class="prx-material-ripple-roundoverflow"></div>';
 		}
 
 		cR += '<input type="checkbox" id="'+_id+'-checkbox" '+_active+' style="display: none;" data-role="none" />';
@@ -1400,6 +1417,8 @@ prx.types.material_morphing_lines = {
 		cR += '<span class="lines lines-after liveUpdate-backgroundColor'+((prx.componentsHelper.getProp(item.active,'boolean') === true || prx.componentsHelper.getProp(item.active,'other') == "true") ? 'Active' : '') +' changeProperty-backgroundColor"></span>';
 		cR += '</span>';
 		cR += '</label>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1579,9 +1598,10 @@ prx.types.material_textfield = {
 		var _props = prx.componentsHelper.getProp(item.textProperties,'props-text');
 		
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-material-textfield '+((prx.componentsHelper.getProp(item.isFull,'boolean')) ? 'full ' : '')+'type-material-textfield-'+prx.componentsHelper.getProp(item.inputtype,'other')+' liveUpdate-backgroundColor changeProperty-backgroundColor">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-textfield '+((prx.componentsHelper.getProp(item.isFull,'boolean')) ? 'full ' : '')+'type-material-textfield-'+prx.componentsHelper.getProp(item.inputtype,'other')+' liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';}';
 		cR += '#'+_id+' input, #'+_id+' .faux-input { color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border-bottom: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; '+ _props + ' }';
 		if(!prx.componentsHelper.getProp(item.hasIcon,'boolean')) {
@@ -1606,7 +1626,8 @@ prx.types.material_textfield = {
 				cR += '#' + _id + ' .material-textfield-icon.checked { background-image: none; -webkit-mask-image: url('+prx.componentsHelper.getProp(item.imgSrc,'asset')+'); background-color: '+prx.componentsHelper.getProp(item.borderColorActive,'color-background')+'; }';
 			}
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		if(prx.editor) {
 			if(prx.componentsHelper.getProp(item.hasIcon,'boolean') && item.imgSrc.fileid != '') {
@@ -1616,7 +1637,7 @@ prx.types.material_textfield = {
 			}
 			cR += '<div class="material-textfield-field-wrapper">';
 			cR += '<div class="faux-input liveUpdate-textColor liveUpdate-borderColor changeProperty-textColor changeProperty-borderColor" data-editableproperty="value">'+prx.componentsHelper.getProp(item.value,'text')+'</div>';
-			cR += '<div class="faux-input placeholder-input changeProperty-textColor changeProperty-borderColor">'+prx.componentsHelper.getProp(item.placeholder,'other')+'</div>'
+			cR += '<div class="faux-input placeholder-input changeProperty-textColor changeProperty-borderColor">'+prx.componentsHelper.getProp(item.placeholder,'other')+'</div>';
 			cR += '</div>';
 		}
 		else {
@@ -1629,6 +1650,7 @@ prx.types.material_textfield = {
 			cR += '<input type="'+prx.componentsHelper.getProp(item.inputtype,'other')+'" value="'+prx.componentsHelper.getProp(item.value,'text')+'" placeholder="'+prx.componentsHelper.getProp(item.placeholder,'other')+'" data-role="none" class="real-input liveUpdate-backgroundColor liveUpdate-textColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-textColor changeProperty-textSize changeProperty-textFont changeProperty-borderColor changeProperty-borderWidth changeProperty-borderRadius changeProperty-textAlign" />'
 			cR += '</div>';
 		}
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -1828,9 +1850,10 @@ prx.types.material_textarea = {
 		var _labelprops = prx.componentsHelper.getProp(item.labelProperties,'props-text');
 		
 		var cR = '';		
-		cR += '<div id="' + _id + '" class="box pos type-material-textarea'+((prx.componentsHelper.getProp(item.isFull,'boolean')) ? ' full' : '')+' liveUpdate-backgroundColor changeProperty-backgroundColor">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-textarea'+((prx.componentsHelper.getProp(item.isFull,'boolean')) ? ' full' : '')+' liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-bakground')+';}';
 		cR += '#'+_id+' > textarea, #'+_id+' .faux-input { padding-top: '+(16*prx.componentsHelper.getScale(item.lib))+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border-bottom: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'px '+ _props + '}';
 		if(prx.componentsHelper.getProp(item.isFull,'boolean')) { 
@@ -1849,7 +1872,8 @@ prx.types.material_textarea = {
 		cR += '#'+_id+' .label { color: '+prx.componentsHelper.getProp(item.labelColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.labelSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+'; text-align: '+prx.componentsHelper.getProp(item.labelAlign,'align')+';  '+ _labelprops +' }';
 		cR += '#'+_id+' > textarea, #'+_id+' .faux-input { padding-top: '+(8*prx.componentsHelper.getScale(item.lib))+'px; }';		
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 			
 		if(prx.editor) {
 			if(prx.componentsHelper.getProp(item.hasLabel,'boolean')) {
@@ -1864,6 +1888,7 @@ prx.types.material_textarea = {
 			cR += '<textarea class="real-input liveUpdate-placeholderColor liveUpdate-textColor liveUpdate-borderColor changeProperty-borderColor changeProperty-borderWidth changeProperty-borderRadius changeProperty-textSize changeProperty-textFont changeProperty-textColor changeProperty-textAlign" placeholder="'+prx.componentsHelper.getProp(item.placeholder,'other')+'" data-role="none">'+prx.componentsHelper.getProp(item.value,'text-textarea').replace(/<br \/>/g, "\n")+'</textarea>'
 		}
 
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2103,9 +2128,10 @@ prx.types.material_textfield_floating_label = {
         if( typeof(item.labelFont) == 'undefined' ) item.labelFont = 'Roboto Medium, sans-serif';
 
         var cR = '';
-        cR += '<div id="' + _id + '" class="box pos type-material-floating-label type-material-textfield-'+prx.componentsHelper.getProp(item.inputtype,'other')+' liveUpdate-backgroundColor changeProperty-backgroundColor">';
+        cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-floating-label type-material-textfield-'+prx.componentsHelper.getProp(item.inputtype,'other')+' liveUpdate-backgroundColor changeProperty-backgroundColor">';
 
         cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 
         cR += '#'+_id+' { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';}';
         cR += '#'+_id+' input, #'+_id+' textarea, #'+_id+' .faux-input { color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border-bottom: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; '+ _props + ' }';
@@ -2116,7 +2142,8 @@ prx.types.material_textfield_floating_label = {
             cR += '#'+_id+' input:focus, #'+_id+' textarea:focus { border-bottom: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*2+'px solid '+prx.componentsHelper.getProp(item.borderColorActive,'color-border')+'; }';
             cR += '#'+_id+' input:focus + .label, #'+_id+' textarea:focus + .label { color: '+prx.componentsHelper.getProp(item.borderColorActive,'color-border')+'; }';
         }
-        cR += '</style>'
+        cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
         if(prx.editor) {
             cR += '<div class="material-floating-label-field-wrapper">';
@@ -2135,6 +2162,7 @@ prx.types.material_textfield_floating_label = {
             cR += '<div class="label '+((prx.componentsHelper.getProp(item.fieldtype,'other') == 'textarea') ? 'textarea ' : '')+'liveUpdate-labelColor changeProperty-labelAlign changeProperty-labelFont">'+prx.componentsHelper.getProp(item.label,'other')+'</div>'
             cR += '</div>';
         }
+		cR += prx.items.getComponentAppendDivs(item, containerid);
         cR += '</div>';
         return cR;
     }
@@ -2323,9 +2351,10 @@ prx.types.material_textarea_floating_label = {
         if( typeof(item.labelFont) == 'undefined' ) item.labelFont = 'Roboto Medium, sans-serif';
 
         var cR = '';
-        cR += '<div id="' + _id + '" class="box pos type-material-floating-label type-material-textfield-textarea liveUpdate-backgroundColor changeProperty-backgroundColor">';
+        cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-floating-label type-material-textfield-textarea liveUpdate-backgroundColor changeProperty-backgroundColor">';
 
         cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 
         cR += '#'+_id+' { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+';}';
         cR += '#'+_id+' textarea, #'+_id+' .faux-input { color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' border-bottom: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; '+ _props + ' }';
@@ -2336,7 +2365,8 @@ prx.types.material_textarea_floating_label = {
             cR += '#'+_id+' textarea:focus { border-bottom: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*2+'px solid '+prx.componentsHelper.getProp(item.borderColorActive,'color-border')+'; }';
             cR += '#'+_id+' textarea:focus + .label { color: '+prx.componentsHelper.getProp(item.borderColorActive,'color-border')+'; }';
         }
-        cR += '</style>'
+        cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
         if(prx.editor) {
             cR += '<div class="material-floating-label-field-wrapper">';
@@ -2350,6 +2380,7 @@ prx.types.material_textarea_floating_label = {
             cR += '<div class="label textarea liveUpdate-labelColor changeProperty-labelAlign changeProperty-labelFont">'+prx.componentsHelper.getProp(item.label,'other')+'</div>'
             cR += '</div>';
         }
+		cR += prx.items.getComponentAppendDivs(item, containerid);
         cR += '</div>';
         return cR;
     }
@@ -2497,21 +2528,24 @@ prx.types.material_checkbox = {
 		if(prx.componentsHelper.getProp(item.active,'boolean')) { _active = 'checked="checked"';}
 		
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-material-checkbox">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-checkbox">';
 		
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#' + _id + ' label { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border-color: '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
 		cR += '#' + _id + ' label .check { background-color: '+prx.componentsHelper.getProp(item.checkColor,'color-background')+';}'
 		cR += '#' + _id + ' input:checked + label { background-color: '+prx.componentsHelper.getProp(item.activeColor,'color-background')+'; border-color: '+prx.componentsHelper.getProp(item.activeColor,'color-border')+'; }';
 		cR += '#' + _id + ' input + label:active .radial { width: '+(dims.width*1.7)+'px; height: '+(dims.width*1.7)+'px; left: -'+Math.round(((dims.width*1.7)-dims.width)/2)+'px; top: -'+Math.round(((dims.width*1.7)-dims.width)/2)+'px; }';
 		cR += '#' + _id + ' input:checked + label:active .radial { background-color: '+prx.componentsHelper.getProp(item.activeColor,'color-background')+';}';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<input type="checkbox" id="'+_id+'-checkbox" '+_active+' style="display: none;" data-role="none" />';
 		cR += '<label for="'+_id+'-checkbox" class="'+((_active != '') ? 'liveUpdate-activeColor-border-color liveUpdate-activeColor-background-color changeProperty-activeColor-border-color changeProperty-activeColor-background-color' : 'liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderColor')+'">';
 		cR += '<div class="radial"></div>';
 		cR += '<div class="check-container" data-clickable="true"><div class="check short '+((_active != '') ? 'liveUpdate-checkColor changeProperty-checkColor' : '')+'"></div><div class="check long '+((_active != '') ? 'liveUpdate-checkColor changeProperty-checkColor' : '')+'"></div></div>';
 		cR += '</label>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2688,22 +2722,25 @@ prx.types.material_radiobutton = {
 		if(prx.componentsHelper.getProp(item.active,'boolean')) { _active = 'checked="checked"';}
 		
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-material-radiobutton">';		
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-radiobutton">';
 		
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' label { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border-color: '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
 		cR += '#'+_id+' label .circle { background-color: '+prx.componentsHelper.getProp(item.activeColor,'color-background')+'; border-width: '+(item.height-2*prx.componentsHelper.getScale('material'))*0.16+'px '+(item.width-2*prx.componentsHelper.getScale('material'))*0.16+'px;}'
 		cR += '#'+_id+' input:checked + label { border-color: '+prx.componentsHelper.getProp(item.activeColor,'color-border')+'; }';
 		cR += '#'+_id+' input:checked + label .circle { background-color: '+prx.componentsHelper.getProp(item.activeColor,'color-background')+';}';
 		cR += '#'+_id+' input + label:active .radial { width: '+(dims.width*1.7)+'px; height: '+(dims.width*1.7)+'px; left: -'+((dims.width*1.7)-dims.width)/2+'px; top: -'+((dims.width*1.7)-dims.width)/2+'px; }';
 		cR += '#'+_id+' input:checked + label:active .radial { background-color: '+prx.componentsHelper.getProp(item.activeColor,'color-background')+';}';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<input type="'+_type+'" id="'+_id+'-checkbox" '+_active+' style="display: none;" data-role="none" />';
 		cR += '<label class="liveUpdate-backgroundColor liveUpdate-activeColor-border-color changeProperty-backgroundColor changeProperty-activeColor-border-color" for="'+_id+'-checkbox">';
 		cR += '<div class="radial"></div>';
 		cR += '<div class="circle liveUpdate-activeColor-background-color changeProperty-activeColor-background-color"></div>';
 		cR += '</label>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2862,9 +2899,10 @@ prx.types.material_onoffswitch = {
 		var buttonDims = dims.height;
 
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-material-onoffswitch">';		
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-onoffswitch">';
 				
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .material-onoff-inner { border-radius: '+Math.round(dims.height/2)+'px }';
 		cR += '#'+_id+' .material-onoff-inner:before { background-color: '+prx.componentsHelper.getProp(item.activeLabelColor,'color-background')+'; }';
 		cR += '#'+_id+' .material-onoff-inner:after { background-color: '+prx.componentsHelper.getProp(item.inactiveLabelColor,'color-background')+'; }';
@@ -2873,6 +2911,7 @@ prx.types.material_onoffswitch = {
 		cR += '#'+_id+' input + label:active .radial { width: '+(buttonDims*1.5)+'px; height: '+(buttonDims*1.5)+'px; left: -'+Math.round(((buttonDims*1.5)-buttonDims)/2)+'px; top: -'+Math.round(((buttonDims*1.5)-buttonDims)/2)+'px; }';
 		cR += '#'+_id+' input:checked + label:active .radial { background-color: '+prx.componentsHelper.getProp(item.activeSwitchColor,'color-background')+';}';
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		// checkbox needs to stay "id-flipswitch" for player compatibility!
 		cR += '<input class="material-onoff-checkbox" type="checkbox" '+_active+ ' id="'+_id+'-flipswitch" data-role="none">';
@@ -2882,7 +2921,7 @@ prx.types.material_onoffswitch = {
 		cR += '<span class="radial"></span>';
 		cR += '</span>';
 		cR += '</label>';
-		
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		
 		return cR;
@@ -3151,9 +3190,10 @@ prx.types.material_bottomsheet_complex = {
 
 		
 		
-		var cR = '<div id="'+_id+'" class="pos box type-material-bottomsheet">';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-bottomsheet">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#' + _id + ' .material-bottomsheet-inner { '+prx.css.flexJustifyContent(prx.componentsHelper.getProp(item.textAlign,'align'))+' background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#' + _id + ' .material-bottomsheet-icon-wrapper { width: '+Math.round((parseInt(listItemH)/2)-(5*prx.componentsHelper.getScale(item.lib)))+'px; height: '+Math.round((parseInt(listItemH)/2)-(5*prx.componentsHelper.getScale(item.lib)))+'px; }';
 		cR += '#' + _id + ' .material-bottomsheet-listitem-type-infoTitle .material-bottomsheet-icon-wrapper { width: '+Math.round((parseInt(listItemH)/2)+(10*prx.componentsHelper.getScale(item.lib)))+'px; height: '+Math.round((parseInt(listItemH)/2)+(10*prx.componentsHelper.getScale(item.lib)))+'px; }';
@@ -3169,6 +3209,7 @@ prx.types.material_bottomsheet_complex = {
 			cR += '#' + _id + ' .material-bottomsheet-separator { width: '+dims.width+'px; background-color: '+prx.componentsHelper.getProp(item.dividerColor,'color-background')+'; }';
 		}
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-bottomsheet-inner liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-textAlign changeProperty-textFont changeProperty-textSize">';
 				
@@ -3251,7 +3292,9 @@ prx.types.material_bottomsheet_complex = {
 				cR += '</div>';
 			}
 		});
-		cR += '</div></div>';	
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,onResize: function(item,containerid) {
@@ -3648,9 +3691,11 @@ prx.types.material_list_complex = {
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 		var _subprops = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.subtitleProperties,'props-text') : '';
 
-		var cR = '<div id="'+_id+'" class="pos box type-material-list">';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-list">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+
 		cR += '#' + _id + ' .material-list-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }';
 		cR += '#' + _id + ' .material-list-icon-wrapper { width: '+Math.round((parseInt(listItemH)/2)-(7*prx.componentsHelper.getScale(item.lib)))+'px; height: '+Math.round((parseInt(listItemH)/2)-(7*prx.componentsHelper.getScale(item.lib)))+'px; }';
 		cR += '#' + _id + ' .material-list-icon-wrapper.thumb { width: '+Math.round((parseInt(listItemH)/2)+(14*prx.componentsHelper.getScale(item.lib)))+'px; height: '+Math.round((parseInt(listItemH)/2)+(14*prx.componentsHelper.getScale(item.lib)))+'px; }';
@@ -3681,6 +3726,7 @@ prx.types.material_list_complex = {
 		cR += '#' + _id + ' .material-list-listitem-type-actionTitle .material-list-text { color: '+prx.componentsHelper.getProp(item.actionTitleColor,'color-text')+'; }';
 		cR += '#' + _id + ' .material-list-separator { background-color: '+prx.componentsHelper.getProp(item.dividerColor,'color-background')+'; }';
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-list-inner liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderColor">';
 				
@@ -3780,7 +3826,9 @@ prx.types.material_list_complex = {
 			cR += '</label>';
 			cR += '</div>';
 		});
-		cR += '</div></div>';	
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 		
 		$('#property-checked, #property-activeColor, #property-checkColor, #property-inactiveColor, #property-borderColorCheck')
@@ -4438,13 +4486,16 @@ prx.types.material_ripple = {
 
 		var cR = '';
 
-		cR += '<div id="' + _id + '" class="box pos type-material-ripple">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-ripple">';
 
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .inner-rec { background-color: '+prx.componentsHelper.getProp(item.rippleEffectColor,'color-background')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="inner-rec liveUpdate-rippleEffectColor prx-material-ripple '+((prx.componentsHelper.getProp(item.circ,'boolean')) ? 'type-material-ripple-circ' : '')+'"><div></div></div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -4485,17 +4536,20 @@ prx.types.material_toast = {
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 				
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-toast">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-toast">';
 		
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .material-toast-wrapper { border-radius: '+Math.round(dims.height/2)+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#'+_id+' .material-toast-inner { '+prx.componentsHelper.getProp(item.textFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+_props+' }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 				
 		cR += '<div class="material-toast-wrapper liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		cR += '<div class="material-toast-inner liveUpdate-textColor changeProperty-text changeProperty-textFont changeProperty-textSize changeProperty-textColor"><span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span></div>';
-		cR += '</div>'
-		cR += '</div>'
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,onResize: function(item,containerid) {
@@ -4569,9 +4623,10 @@ prx.types.material_snackbar_action = {
 		}
 		
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-snackbar">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-snackbar">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#' + _id + ' .material-snackbar-wrapper { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '#' + _id + ' .material-snackbar-text { color: '+prx.componentsHelper.getProp(item.textColor,'color-background')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+_props+'}';
 		cR += '#' + _id + ' .material-snackbar-close-separator { background-color: '+prx.componentsHelper.getProp(item.separatorColor,'color-background')+';}';
@@ -4579,6 +4634,7 @@ prx.types.material_snackbar_action = {
 		cR += '#' + _id + ' .material-snackbar-action-text { color: '+prx.componentsHelper.getProp(item.actionColor,'color-text')+'; '+prx.componentsHelper.getProp(item.actionFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.actionSize,'num-text-size')+'px; '+_actionprops+'}';
 		}
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-snackbar-wrapper liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		cR += '<div class="material-snackbar-text liveUpdate-textColor changeProperty-textColor changeProperty-textSize changeProperty-textFont actions-actions1"><span data-editableproperty="text">'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span></div>';
@@ -4586,6 +4642,7 @@ prx.types.material_snackbar_action = {
 		cR += '<div class="material-snackbar-action-text liveUpdate-actionColor changeProperty-actiontColor changeProperty-actionSize changeProperty-actionFont actions-actions2 '+((prx.componentsHelper.getProp(item.rippleEffect,'boolean')) ? 'prx-material-ripple' : '' )+'" data-editableproperty="action">'+prx.componentsHelper.getProp(item.action,'text-textarea')+'</div>';
 		}
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -4792,9 +4849,10 @@ prx.types.material_dialog_alert = {
 
 		
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-dialog">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-dialog">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#' + _id + ' .material-dialog-wrapper { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }';
 		cR += '#' + _id + ' .material-dialog-title { color: '+prx.componentsHelper.getProp(item.titleColor,'color-text')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.titleSize,'num-text-size')+'px; '+_titleprops+' }';
 		cR += '#' + _id + ' .material-dialog-text { color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; '+_props+' }';
@@ -4805,6 +4863,7 @@ prx.types.material_dialog_alert = {
 			cR += '#' + _id + ' .material-dialog-buttons { padding: '+(4*prx.componentsHelper.getScale(item.lib))+'px '+(24*prx.componentsHelper.getScale(item.lib))+'px '+(8*prx.componentsHelper.getScale(item.lib))+'px 0;}';
 		}
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-dialog-wrapper liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		if(item.withTitle) {
@@ -4822,6 +4881,7 @@ prx.types.material_dialog_alert = {
 		});
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -5107,9 +5167,10 @@ prx.types.material_dialog_simpledialog = {
 
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 
-		var cR = '<div id="'+_id+'" class="pos box type-material-simple-dialog">';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-simple-dialog">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		if(prx.componentsHelper.getProp(item.name,'other') == 'material_dialog_simplemenu') {
 		cR += '#' + _id + ' .material-simple-dialog-inner { box-shadow: 0px 0px '+(2*prx.componentsHelper.getScale(item.lib))+'px '+(1*prx.componentsHelper.getScale(item.lib))+'px rgba(0, 0, 0, 0.25); }';
 		}
@@ -5118,6 +5179,7 @@ prx.types.material_dialog_simpledialog = {
 		cR += '#' + _id + ' .material-simple-dialog-text-wrapper { height: '+Math.round(listItemH)+'px; }';
 		cR += '#' + _id + ' .material-simple-dialog-text { '+prx.componentsHelper.getProp(item.textFont,'font-family')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+_props+' }';
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-simple-dialog-inner liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-textAlign changeProperty-textFont changeProperty-textSize">';
 				
@@ -5145,7 +5207,9 @@ prx.types.material_dialog_simpledialog = {
 			cR += '</div>';
 			cR += '</div>';
 		});
-		cR += '</div></div>';	
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,onResize: function(item,containerid) {
@@ -5304,9 +5368,10 @@ prx.types.material_progress_determinate = {
 		var dims = prx.componentsHelper.getRealDims(item, symbol);
 		
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-progress '+((prx.componentsHelper.getProp(item.isDownloading,'boolean')) ? '' : 'estimation') +'">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-progress '+((prx.componentsHelper.getProp(item.isDownloading,'boolean')) ? '' : 'estimation') +'">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#' + _id + ' .material-progress-bg-bar { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		if( item.isDownloading ) {
 		cR += '#' + _id + ' .material-progress-downloading-bar { width: '+prx.componentsHelper.getProp(item.percentBarValue,'num-percentage')+'%; background-color: '+prx.componentsHelper.getProp(item.percentBarBackgroundColor,'color-fill')+'; }';
@@ -5315,6 +5380,7 @@ prx.types.material_progress_determinate = {
 		cR += '#' + _id + ' .material-progress-loading-bar { background-color: '+prx.componentsHelper.getProp(item.percentBarBackgroundColor,'color-fill')+'; }';
 		}
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div class="material-progress-bg-bar liveUpdate-bgBarBackgroundColor changeProperty-bgBarBackgroundColor">';
 		
@@ -5324,6 +5390,7 @@ prx.types.material_progress_determinate = {
 		cR += '<div class="material-progress-loading-bar liveUpdate-percentBarBackgroundColor changeProperty-percentBarBackgroundColor"></div>';
 		
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -5398,9 +5465,10 @@ prx.types.material_slider_continuous = {
 		if(typeof(item.badgeSize) == 'undefined') { item.badgeSize = 0;}
 		
 		var cR = '';			
-		cR += '<div id="' + _id + '" class="box pos type-material-slider">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-slider">';
 		
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .material-slider-bar-wrapper { height: '+dims.height+'px; }';
 		cR += '#'+_id+' .material-slider-bar { height: '+prx.componentsHelper.getProp(item.barThickness,'num-other')+'px; background-color: '+prx.componentsHelper.getProp(item.barColor,'color-background')+'; margin-top: -'+(prx.componentsHelper.getProp(item.barThickness,'num-other')/2)+'px; }'
 		cR += '#'+_id+' .material-slider-bar-filled { width: '+prx.componentsHelper.getProp(item.sliderPosition,'num-percentage')+'%; background-color: '+prx.componentsHelper.getProp(item.fillBarColor,'color-fill')+' }'
@@ -5428,7 +5496,8 @@ prx.types.material_slider_continuous = {
 		}		
 		
 		}
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 			
 		cR += '<div class="material-slider-bar-wrapper">';
 		cR += '<div class="material-slider-bar liveUpdate-barColor">';
@@ -5444,7 +5513,8 @@ prx.types.material_slider_continuous = {
 		else {
 		cR += '<span class="material-slider-button liveUpdate-fillBarColor"></span>';
 		}
-		cR += '</div>'
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 	
 		return cR;
@@ -5891,21 +5961,24 @@ prx.types.material_toolbar = {
 
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 
-		var cR = '<div id="' + _id + '" class="box pos type-toolbar">';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-toolbar">';
 		
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .inner-rec { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-backgrounnd')+'; } ';
 		if(prx.componentsHelper.getProp(item.shadowEnabled,'boolean')) {
 			cR += '#'+_id+' .inner-rec { box-shadow: 0 '+(1*prx.componentsHelper.getScale(item.lib))+'px '+(3*prx.componentsHelper.getScale(item.lib))+'px '+(1*prx.componentsHelper.getScale(item.lib))+'px '+ prx.componentsHelper.getProp(item.shadowColor,'color-shadow') + '; } ';
 		}
 		cR += '#'+_id+' .toolbar-text-container { '+_props+' '+prx.componentsHelper.getProp(item.textFont,'font-family')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div id="rec-' + _id + '" class="inner-rec liveUpdate-backgroundColor liveUpdate-borderColor liveUpdate-shadowColor changeProperty-backgroundColor changeProperty-borderColor liveUpdate-shadowColor changeProperty-borderWidth changeProperty-borderStyle">';
 		cR += '<div class="toolbar-text-container liveUpdate-textColor changeProperty-textColor changeProperty-textFont changeProperty-textSize changeProperty-textProperties changeProperty-textAlign">';
 		cR += '<span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span>';
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -6011,18 +6084,21 @@ prx.types.material_rectangle_shadow = {
 
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 				
-		var cR = '<div id="' + _id + '" class="box pos type-rectangle-shadow">';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-rectangle-shadow">';
 		
-		cR += '<style>'
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .inner-rec { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; box-shadow: 0 1px 1px 1px '+ prx.componentsHelper.getProp(item.shadowColor,'color-shadow') + '; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px '+prx.componentsHelper.getProp(item.borderStyle,'border-type')+' ' + prx.componentsHelper.getProp(item.borderColor,'color-border') + '; border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'; } ';
 		cR += '#'+_id+' .rectangle-shadow-text-container { '+_props+' '+prx.componentsHelper.getProp(item.textFont,'font-family')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; }';
-		cR += '</style>'
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		
 		cR += '<div id="rec-' + _id + '" class="inner-rec liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderColor changeProperty-borderWidth changeProperty-borderStyle">';
 		cR += '<div class="rectangle-shadow-text-container liveUpdate-textColor changeProperty-textColor changeProperty-textFont changeProperty-textSize changeProperty-textProperties changeProperty-textAlign">';
 		cR += '<span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span>';
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -6108,9 +6184,10 @@ prx.types.material_statusbar = {
 		var now = new Date();
 
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-statusbar" '+((prx.componentsHelper.getProp(item.overlay,'boolean'))? 'data-mpoverlay="1"': '')+'>';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-statusbar" '+((prx.componentsHelper.getProp(item.overlay,'boolean'))? 'data-mpoverlay="1"': '')+'>';
 
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .material-statusbar-inner { font-size: '+Math.round(dims.height/2)+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; color: '+prx.componentsHelper.getProp(item.foregroundColor,'color-text')+'; }';
 		cR += '#'+_id+' .material-statusbar-inner>div:not(.material-statusbar-time) { width: '+dims.height+'px;}';
 		cR += '#'+_id+' .material-wifi-quarter { background-color: '+prx.componentsHelper.getProp(item.foregroundColor,'color-background')+';}';
@@ -6121,6 +6198,7 @@ prx.types.material_statusbar = {
 		cR += '#'+_id+' .material-battery-container { width: '+Math.round(dims.height/3)+'px; background-color: '+prx.componentsHelper.getProp(item.foregroundColor,'color-background')+';}';
 		cR += '#'+_id+' .material-battery-tip { width: '+Math.round(dims.height/6)+'px; margin-left: -'+Math.round(dims.height/12)+'px; background-color: '+prx.componentsHelper.getProp(item.foregroundColor,'color-background')+';}';
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="material-statusbar-inner liveUpdate-backgroundColor liveUpdate-foregroundColor-color changeProperty-backgroundColor changeProperty-foregroundColor-color">';
 		cR += '<div class="material-statusbar-wifi">';
@@ -6137,6 +6215,7 @@ prx.types.material_statusbar = {
 		cR += '</div>';
 		cR += '<div class="material-statusbar-time">'+("0" + now.getHours()).substr(-2,2)+':'+("0" + now.getMinutes()).substr(-2,2)+'</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -6227,11 +6306,13 @@ prx.types.material_navigationbar = {
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
 
 		var cR = '';
-		cR += '<div id="'+_id+'" class="box pos type-material-navigationbar" '+((prx.componentsHelper.getProp(item.overlay,'boolean'))? 'data-mpoverlay="1"': '')+'>';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-material-navigationbar" '+((prx.componentsHelper.getProp(item.overlay,'boolean'))? 'data-mpoverlay="1"': '')+'>';
 
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .material-navigationbar-inner { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }';
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<div class="material-navigationbar-inner liveUpdate-backgroundColor">';
 		cR += '<div class="material-navigationbar-button" style="background-image: url('+prx.componentsHelper.getProp(item.icon1,'asset')+')"></div>';
@@ -6239,6 +6320,7 @@ prx.types.material_navigationbar = {
 		cR += '<div class="material-navigationbar-button" style="background-image: url('+prx.componentsHelper.getProp(item.icon3,'asset')+')"></div>';
 
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}

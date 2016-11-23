@@ -29,17 +29,18 @@ prx.types.shape = {
 
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 
-		var cR = '<div id="' + _id + '" class="box pos type-shapes '+prx.componentsHelper.getProp(item.typeName,'other')+'" data-shape-type="'+prx.componentsHelper.getProp(item.typeName,'other')+'" ';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-shapes '+prx.componentsHelper.getProp(item.typeName,'other')+'" data-shape-type="'+prx.componentsHelper.getProp(item.typeName,'other')+'" ';
 		cR += 'data-border-width-shape="'+prx.componentsHelper.getProp(item.borderWidthShape,'border-width')+'" data-num-nodes="'+prx.componentsHelper.getProp(item.numOfNodes,'numOfNodes')+'" data-spike-depth="'+prx.componentsHelper.getProp(item.spikeDepth,'spikeDepth')+'" ';
 		cR += 'data-skew="'+prx.componentsHelper.getProp(item.skew,'skew')+'" data-base-width="'+prx.componentsHelper.getProp(item.baseWidth,'baseWidth')+'">';
 		
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .shapes-text-container { width: 100%; height: 100%; '+_props+' '+prx.componentsHelper.getProp(item.textFont,'font-family')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; line-height: ' + prx.componentsHelper.getProp(item.lineHeight, 'num-text-size') + 'px; letter-spacing: ' + prx.componentsHelper.getProp(item.textSpacing, 'num-text-size') + 'px;  }';
 		if( prx.componentsHelper.getProp(item.joinType,'other') == 'miter') {
 			cR += '#'+_id+' svg { overflow: visible; }';
 		}
 		cR += '</style>';
-
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<div id="'+prx.componentsHelper.getProp(item.typeName,'other')+'-' + _id + '" class="shape-wrapper ">';
 
 		cR += '<svg id="svg-'+ _id +'" viewBox="0 0 '+(dims.width)+' '+(dims.height)+'" width="100%" height="100%" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" version="1.1">';
@@ -62,6 +63,7 @@ prx.types.shape = {
 		cR += '<span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span>';
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -572,6 +574,7 @@ prx.types.shape = {
 prx.types.symbol = {
 	name: "symbol"
 	,onDisplay: function(item,containerid) {
+
 		//var isAppleWatch = ((typeof(prx.devices[prx.device]) != "undefined" && prx.devices[prx.device].deviceType == "applewatch") || (typeof(prx.deviceExtraParams)!="undefined" && prx.deviceExtraParams.deviceType == "applewatch")) ? true : false;
 		var isAppleWatchCrown = ((typeof(prx.devices[prx.device]) != "undefined" && prx.devices[prx.device].scrollType == "crown") || (typeof(prx.deviceExtraParams)!="undefined" && prx.deviceExtraParams.scrollType == "crown")) ? true : false;
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
@@ -651,7 +654,7 @@ prx.types.symbol = {
 			if(typeof(item.propagateevents) == "undefined") { item.propagateevents = false; }
 
 
-			cReturn += '<div id="' + _id + '" class="box type-symbol '+((prx.componentsHelper.getProp(item.propagateevents,'boolean') && (prx.componentsHelper.getProp(item.scroll,'other') == '' || prx.componentsHelper.getProp(item.scroll,'other') == 'none')) ? 'type-symbol-transparent' : '')+ ' scroll-' + prx.componentsHelper.getProp(item.scroll,'other') + '" data-symbol-id="'+prx.componentsHelper.getProp(item.symbolid,'other')+'" '+dataState+' style="position: absolute;background-color: '+prx.componentsHelper.getProp(_bg,'color-background')+';">';
+			cReturn += '<div id="' + _id + '" class="box type-symbol ' + prx.items.getComponentBaseClasses(item, containerid) + ' ' +((prx.componentsHelper.getProp(item.propagateevents,'boolean') && (prx.componentsHelper.getProp(item.scroll,'other') == '' || prx.componentsHelper.getProp(item.scroll,'other') == 'none')) ? 'type-symbol-transparent' : '')+ ' scroll-' + prx.componentsHelper.getProp(item.scroll,'other') + '" data-symbol-id="'+prx.componentsHelper.getProp(item.symbolid,'other')+'" '+dataState+' style="position: absolute;background-color: '+prx.componentsHelper.getProp(_bg,'color-background')+';" ' + prx.items.getComponentBaseAttributes(item, containerid) + '>';
 
 
 			var applewatchScrollbarClass = '';
@@ -677,7 +680,13 @@ prx.types.symbol = {
 				cReturn += '</style>';
 
 			}
-			cReturn +='<div id="'+_id+'-inner" class="'+applewatchScrollbarClass+'" style="position: absolute; overflow: hidden !important; height: 100%; width: 100%;"><div id="' + _id + '-scroll" class="symbol-scroll" style="width: '+_symbol_width+'; height: '+_symbol_height+'; position: absolute; overflow: hidden;">' + prx.stc.containers.render(item,containerid,stateindex) + '</div></div></div>';
+			cReturn += '<style>';
+			cReturn += prx.items.getComponentBaseStyle(item, containerid, prx.symbols[_symbolindex].states[stateindex]);
+			cReturn += '</style>';
+			cReturn += prx.items.getComponentPrependDivs(item, containerid);
+			cReturn +='<div id="'+_id+'-inner" class="'+applewatchScrollbarClass+'" style="position: absolute; overflow: hidden !important; height: 100%; width: 100%;"><div id="' + _id + '-scroll" class="symbol-scroll" style="width: '+_symbol_width+'; height: '+_symbol_height+'; position: absolute; overflow: hidden;">' + prx.stc.containers.render(item,containerid,stateindex) + '</div></div>';
+			cReturn += prx.items.getComponentAppendDivs(item, containerid);
+			cReturn += '</div>'
 		} else {
 			_appenditem = false;
 			if(prx.editor) {
@@ -1110,9 +1119,17 @@ prx.types.text = {
 		if(typeof(item.lineHeight) == "undefined") { item.lineHeight = parseInt(prx.componentsHelper.getProp(item.textSize,'num-text-size')*1.231); }
 		if(typeof(item.lineHeightAuto) == "undefined") { item.lineHeightAuto = Boolean(true) }
 		if(typeof(item.textSpacing) == "undefined") { item.textSpacing = 0 }
-		
-        var cReturn = '<div id="' + _id + '" data-width='+item.width+' class="box pos type-text '+(prx.componentsHelper.getProp(item.propagateEvents,'boolean') ? 'pointer-events-none ' : '')+'liveUpdate-textColor changeProperty-textColor liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-textAlign changeProperty-lineHeight changeProperty-textSpacing '+ (item.v2!==undefined && item.v2 == true ? 'v2-text ' : '')+'" style="line-height: '+prx.componentsHelper.getProp(item.lineHeight,'num-other')+'px; letter-spacing: ' + prx.componentsHelper.getProp(item.textSpacing, 'num-text-size') + 'px; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+_props+_shadow+' text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+';"><div class="text-contents '+(prx.componentsHelper.getProp(item.autoResize,'boolean')==true ? ' autoResize-true' : '')+'"> <span data-editableproperty="text" '+(prx.componentsHelper.getProp(item.autoResize,'boolean')==true ? 'class="autoresize"' : '')+'>'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span></div></div>';
-		return cReturn;
+        var cR = '<div id="' + _id + '" data-width='+item.width+' ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-text '+(prx.componentsHelper.getProp(item.propagateEvents,'boolean') ? 'pointer-events-none ' : '')+ 'liveUpdate-textColor changeProperty-textColor liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-textAlign changeProperty-lineHeight changeProperty-textSpacing' + (item.v2!==undefined && item.v2 == true ? 'v2-text ' : '')+'" style="line-height: '+prx.componentsHelper.getProp(item.lineHeight,'num-other')+'px; letter-spacing: ' + prx.componentsHelper.getProp(item.textSpacing, 'num-text-size') + 'px; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; '+_props+_shadow+' text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+';">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div class="text-contents '+(prx.componentsHelper.getProp(item.autoResize,'boolean')==true ? ' autoResize-true' : '')+'">';
+		cR += '<span data-editableproperty="text" '+(prx.componentsHelper.getProp(item.autoResize,'boolean')==true ? 'class="autoresize"' : '')+'>'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
+		return cR;
 	},
 	onResize: function(item,containerid) {
 		if (prx.editor) {
@@ -1868,7 +1885,16 @@ prx.types.richtext = {
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
 		if(typeof(item.propagateEvents) == "undefined") { item.propagateEvents = false; }
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-richtext '+(prx.componentsHelper.getProp(item.propagateEvents,'boolean') ? 'pointer-events-none ' : '')+'"><div style="overflow: hidden; width: 100%; height: 100%;"><span>' + item.text + '</span></div></div>';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + 'box pos type-richtext '+(prx.componentsHelper.getProp(item.propagateEvents,'boolean') ? 'pointer-events-none ' : '')+'">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div style="overflow: hidden; width: 100%; height: 100%;">';
+		cR += '<span>' + item.text + '</span>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,interactions: [
@@ -1970,18 +1996,21 @@ prx.types.rectangle = {
 		var _props = (typeof(prx.richtext)=='undefined') ? prx.componentsHelper.getProp(item.textProperties,'props-text') : '';
 
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-rectangle" data-shape-type="'+item.typeName+'">';
+		cR += '<div id="' + _id + '" class="box pos type-rectangle '+ prx.items.getComponentBaseClasses(item, containerid) +'" data-shape-type="'+item.typeName+'" ' + prx.items.getComponentBaseAttributes(item, containerid) + '>';
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .inner-rec { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px '+prx.componentsHelper.getProp(item.borderStyle,'border-type')+' ' + prx.componentsHelper.getProp(item.borderColor,'color-border') + '; border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'; } ';
 		cR += '#' + _id + ' .shapes-text-container { ' + _props + ' ' + prx.componentsHelper.getProp(item.textFont, 'font-family') + '; font-size: ' + prx.componentsHelper.getProp(item.textSize, 'num-text-size') + 'px; text-align: ' + prx.componentsHelper.getProp(item.textAlign, 'align') + '; line-height: ' + prx.componentsHelper.getProp(item.lineHeight, 'num-text-size') + 'px; letter-spacing: ' + prx.componentsHelper.getProp(item.textSpacing, 'num-text-size') + 'px; color: ' + prx.componentsHelper.getProp(item.textColor, 'color-text') + '; }';
 
 		//cR += '#' + _id + ' .rectangle-text-container span{display:block;}';
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<div id="rec-' + _id + '" class="inner-rec liveUpdate-backgroundColor liveUpdate-backgroundColor-background-color changeProperty-backgroundColor changeProperty-backgroundColor-background-color changeProperty-borderColor changeProperty-borderColor-border-color liveUpdate-borderColor liveUpdate-borderColor-border-color">';
 		cR += '<div class="shapes-text-container liveUpdate-textColor ">';
 		cR += '<span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span>';
 		cR += '</div>';
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -2528,8 +2557,16 @@ prx.types.horizontalline = {
 		item.height = item.weight;
 		if(typeof(item.borderStyle) == "undefined") { item.borderStyle = "solid"; }
 		if (prx.componentsHelper.getProp(item.locked,'boolean')) {var xtra='onmousedown="if (event.preventDefault) event.preventDefault()"';} else {var xtra=""}; // prevent default drag
-		var cReturn = '<div id="' + _id + '" class="box pos type-horizontalline" style="height: '+prx.componentsHelper.getProp(item.weight,'num-other')+'px; overflow: visible"><div class="inner liveUpdate-color" style="border-top: '+prx.componentsHelper.getProp(item.weight,'num-border-width')+'px '+prx.componentsHelper.getProp(item.borderStyle,'border-type')+' '+prx.componentsHelper.getProp(item.color,'color-border')+';"></div></div>';
-		return cReturn;
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-horizontalline" style="height: '+prx.componentsHelper.getProp(item.weight,'num-other')+'px; overflow: visible">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div class="inner liveUpdate-color" style="border-top: '+prx.componentsHelper.getProp(item.weight,'num-border-width')+'px '+prx.componentsHelper.getProp(item.borderStyle,'border-type')+' '+prx.componentsHelper.getProp(item.color,'color-border')+';">';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
+		return cR;
 	}
 	,propertyGroups: [
 		{
@@ -2582,11 +2619,10 @@ prx.types.horizontalline = {
 							transitionable: true
 						}
 	      			}
-
 	      		]
-	      		]
-	      	}
-	      ]
+			]
+		}
+	]
 
 };
 
@@ -2598,8 +2634,16 @@ prx.types.verticalline = {
 		item.width = item.weight;
 		if(typeof(item.borderStyle) == "undefined") { item.borderStyle = "solid"; }
 		if (prx.componentsHelper.getProp(item.locked,'boolean')) {var xtra='onmousedown="if (event.preventDefault) event.preventDefault()"';} else {var xtra=""}; // prevent default drag
-		var cReturn = '<div id="' + _id + '" class="box pos type-verticalline" style="width: '+prx.componentsHelper.getProp(item.weight,'num-other')+'px;"><div class="inner liveUpdate-color" style="border-left: '+prx.componentsHelper.getProp(item.weight,'num-border-width')+'px '+prx.componentsHelper.getProp(item.borderStyle,'border-type')+' '+prx.componentsHelper.getProp(item.color,'color-border')+';"></div></div>';
-		return cReturn;
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-verticalline" style="width: '+prx.componentsHelper.getProp(item.weight,'num-other')+'px;">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div class="inner liveUpdate-color" style="border-left: '+prx.componentsHelper.getProp(item.weight,'num-border-width')+'px '+prx.componentsHelper.getProp(item.borderStyle,'border-type')+' '+prx.componentsHelper.getProp(item.color,'color-border')+';">';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
+		return cR;
 	}
 	,propertyGroups: [
 		{
@@ -2667,8 +2711,17 @@ prx.types.actionarea = {
 	,onDisplay: function(item,containerid) {
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
 
-		var cReturn = '<div id="' + _id + '" class="box pos type-actionarea"><div id="rec-' + _id + '" class="inner-rec" ><div></div></div></div>';
-		return cReturn;
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-actionarea">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div id="rec-' + _id + '" class="inner-rec" >';
+		cR += '<div></div>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
+		return cR;
 	}
 	,interactions: [
 	              prx.commonproperties.actions
@@ -2701,17 +2754,29 @@ prx.types.image = {
 
         if (prx.editor) {
 
-            var img = document.createElement("img");
-            img.onload = function (e) {
+			if( $('#image-load-container').length == 0 )
+				$('<div id="image-load-container"></div>').appendTo('body');
 
-                document.body.removeChild(img);
+			var container = document.getElementById('image-load-container');
+
+			var img = document.createElement("img");
+
+			container.appendChild(img);
+
+			img.onload = function (e) {
+
+				container.removeChild(img);
 
                 $('#' + _id).css('background-image', '');
-                delete prx.imageChecked[toCheck];
+				$('#' + _id + ' .mask-inner').css('background-image', '');
+
+				delete prx.imageChecked[toCheck];
 
                 $('#' + _id + '-img-wrapper').removeClass('missing');
                 $('#' + _id + '-img-wrapper').find('div').remove();
                 //$('#' + _id + '-img-wrapper').css('background-image', '');
+
+
             }
 
             img.onerror = function (e) {
@@ -2729,19 +2794,19 @@ prx.types.image = {
                 $('#' + _id + '-img-wrapper').append(title);
                 $('#' + _id + '-img-wrapper').append($('<div></div>'));
 
-                document.body.removeChild(img);
+				container.removeChild(img);
             }
 
             var toCheck = '' + assetUrl;
 
             img.style.visibility = 'hidden';
-            document.body.appendChild(img);
+			container.appendChild(img);
             img.setAttribute('src', toCheck);
             img.setAttribute('alt', 'na');
 
             if (prx.imageChecked[assetUrl] !== undefined && prx.imageChecked[assetUrl] !== missing) {
                 assetUrl = prx.imageChecked[assetUrl] || assetUrl;
-                prx.items.loadAll();
+                prx.items.addAll();
             }
 
             assetUrl = prx.imageChecked[assetUrl] || assetUrl;
@@ -2763,12 +2828,27 @@ prx.types.image = {
         if( typeof(item.borderWidth) == 'undefined' ) item.borderWidth = 0;
         if( typeof(item.borderRadius) == 'undefined' ) item.borderRadius = 0;
         if( typeof(item.borderPos) == 'undefined' ) item.borderPos = 'inside';
+		if(typeof(item.borderStyle) == "undefined") { item.borderStyle = "solid"; }
 
-		if(thumbUrl != '') {thumbUrl = ' style="background-image:  url(' + thumbUrl + ');" '}
+		if(prx.mask.isActive(item))
+		{
+			var thumbUrl2 = thumbUrl;
+			thumbUrl = '';
+		}
+
+		if(thumbUrl != '' ) {thumbUrl = ' style="background-image:  url(' + thumbUrl + ');" '}
 
         var cR = '<div id="' + _id + '"' + thumbUrl;
+        cR +=  ' ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-image ' + (prx.componentsHelper.getProp(item.propagateEvents,'boolean') ? 'pointer-events-none' : '') + ((prx.componentsHelper.getProp(item.repeat,'boolean')) ? ' type-image-repeater' : '') + '" ' + ((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '') + '>';
 
-        cR += 'class="box pos type-image ' + (prx.componentsHelper.getProp(item.propagateEvents,'boolean') ? 'pointer-events-none' : '') + ((prx.componentsHelper.getProp(item.repeat,'boolean')) ? ' type-image-repeater' : '') + '" ' + ((prx.componentsHelper.getProp(item.overlay,'boolean')) ? 'data-mpoverlay="1"' : '') + '>';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+
+		if(prx.mask.isActive(item))
+			cR += prx.items.getComponentPrependDivs(item, containerid, thumbUrl2);
+		else
+			cR += prx.items.getComponentPrependDivs(item, containerid, '');
 
         cR += '<div class="image-inner borderPos-'+prx.componentsHelper.getProp(item.borderPos,'other')+'">';
 
@@ -2791,15 +2871,17 @@ prx.types.image = {
 
         if (prx.editor && prx.componentsHelper.getProp(item.imgSrc.fileId,'other') == "d310bece0e91b91b485ed62166d1fc2e.svg" && prx.componentsHelper.getProp(item.imgSrc.assetType,'other') == "gallery") {
             cR += '<div class="type-image-hover-message">Double-click to edit image</div>';
-	        cR += '<style>#' + _id + ' { background-color: #f9f9f9; }</style>'
+	        cR += '<style>#' + _id + ' .image-inner { background-color: #f9f9f9; }</style>'
 	        cR += '<style>#' + _id + ' .type-image-wrapper { border: ' + 1 * prx.componentsHelper.getScale(item.lib) + 'px solid #eee; box-sizing: border-box; }</style>'
         }
         else {
             cR += '<style>';
             cR += '#'+_id+', #'+_id+' .type-image-wrapper { border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'px;}';
-    		cR += '#'+_id+' .type-image-wrapper { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+';  }';
+    		cR += '#'+_id+' .type-image-wrapper { border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px ' + prx.componentsHelper.getProp(item.borderStyle,'border-type') +' '+prx.componentsHelper.getProp(item.borderColor,'color-border')+';  }';
     		cR += '</style>'
         }
+
+        cR += prx.items.getComponentAppendDivs(item, containerid);
         cR += '</div>';
 
         return cR;
@@ -2831,21 +2913,29 @@ prx.types.image = {
 						,name: 'imgSrc'
 						,type: 'combo-asset'
 						,displayValue: function(item,name) {
-						if(item.imgSrc.fileId == '') {
-							return 'No asset selected.';
+							if(item.imgSrc.fileId == '') {
+								return 'No asset selected.';
+							}
+							return item.imgSrc.name;
 						}
-						return item.imgSrc.name;
-					}
 						,value: function(item,name) {
-						return JSON.stringify({
-							allow: 'image',
-							asset: item.imgSrc
-						});
-					}
+							return JSON.stringify({
+								allow: 'image',
+								asset: item.imgSrc
+							});
+						}
 						,changeProperty: {
-						caption: 'Image',
-						rerender: true
-					}
+							caption: 'Image',
+							rerender: true
+						},
+						hiddenByDefault: function(item){
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+							//if(prx.mask.editModeIsMaskSelected(item))
+								return true;
+							else
+								return false;
+						}
+
 					}
 				],
 				[
@@ -2863,8 +2953,17 @@ prx.types.image = {
 							return prx.imageFunctions.resetdimensions(item);
 					}
 						,hiddenByDefault: function(item){
+							item.imgSrc.fileId = item.imgSrc.fileId || '';
+							//return value
+							var r = prx.imageFunctions.checkImageMultiplier(item) == false;
 
-						return prx.imageFunctions.checkImageMultiplier(item) == false;
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+							//if(prx.mask.editModeIsMaskSelected(item))
+								r = r || true;
+							else
+								r = r || false;
+
+							return r;
 					}
 					}
 				],
@@ -2884,6 +2983,12 @@ prx.types.image = {
 						,onClick: function(item) {
 
 							return prx.imageFunctions.resetdimensions(item);
+						},
+						hiddenByDefault: function(item){
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+								return true;
+							else
+								return false;
 						}
 					}
 				],
@@ -2903,12 +3008,26 @@ prx.types.image = {
 							var _beforeWidth = $('#' + item.id + " img").prop('naturalWidth');
 							var _beforeHeight = $('#' + item.id + " img").prop('naturalHeight');
 
-							var _afterWidth = item.width;
-							var _afterHeight = (_afterWidth / _beforeWidth) * _beforeHeight;
 
-							_afterHeight = parseInt(Math.round(_afterHeight));
+							if(prx.mask.isActive(item))
+							{
+								return item;
+							}
+							else
+							{
+								var _afterWidth = item.width;
+								var _afterHeight = (_afterWidth / _beforeWidth) * _beforeHeight;
 
-							item.height = _afterHeight;
+								_afterHeight = parseInt(Math.round(_afterHeight));
+
+								item.height = _afterHeight;
+
+								//if is edit mode we only update the mask view - no resizing of mask area
+								if(prx.mask.isEditing(item)){
+									prx.mask.editModeRerenderMaskView(item);
+									prx.mask.editModeRefreshEditMode(item);
+								}
+							}
 
 							item.aspectratio = (_afterWidth / _beforeWidth);
 
@@ -2918,7 +3037,17 @@ prx.types.image = {
 						},
 						hiddenByDefault: function(item){
 							item.imgSrc.fileId = item.imgSrc.fileId || '';
-							return item.imgSrc.fileId.slice(-4) == '.svg';
+							//return value
+							var r = item.imgSrc.fileId.slice(-4) == '.svg';
+
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+							//if(prx.mask.editModeIsMaskSelected(item))
+								r = r || true;
+							else
+								r = r || false;
+
+							return r;
+
 						}
 					}
 				],
@@ -2939,12 +3068,92 @@ prx.types.image = {
 						},
 						hiddenByDefault: function(item){
 							item.imgSrc.fileId = item.imgSrc.fileId || '';
-							return !item.repeat && item.imgSrc.fileId.slice(-4) == '.svg';
+							var r = !item.repeat && item.imgSrc.fileId.slice(-4) == '.svg';
+
+
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+								r = r || true;
+							else
+								r = r || false;
+
+							return r;
 						}
+					}
+				],
+
+			]
+		},
+		{
+			properties: [
+				[
+					{
+						caption: '<div class="icon icon-mask"></div>Mask/Crop'
+						, name: 'maskImage'
+						, type: 'onoff'
+						, onChange: function(item) {
+							var tmp = item.maskImage;
+							delete item.maskImage;
+
+							if(tmp)
+								prx.mask.enable(item);
+							else
+								prx.mask.disable(item);
+
+							return item;
+						}
+							,value: function(item,name) {
+							return prx.mask.isEnabled(item);
+						}
+					},
+
+				],
+				[
+					{
+						caption: 'Reset aspect ratio'
+						, name: 'resetaspectratiomask'
+						, type: 'link'
+						, onClick: function(item) {
+
+						if(prx.mask.isActive(item)) {
+
+							var mask_h = item.height; //mask original height
+
+							//calculate mask's height based on last saved ar
+							item.height = parseInt(item.width / item.mask.last_aspectratio);
+
+							//vertical change ratio
+							var changeRadioH = item.height/mask_h;
+
+							//calculate image's height based on the above change
+							item.mask.inner_height = parseInt(item.mask.inner_height * (changeRadioH));
+
+							//calculate image's y
+							item.mask.y = Math.round((item.mask.y) * changeRadioH);
+
+							item.aspectratio = (item.mask.last_aspectratio); //set aspect ratio
+							$("#property-aspectratio").prop( "checked", true ).change(); //lock aspect ratio
+						}
+
+						return item;
+					}
+						, hiddenByDefault: function(item){
+						item.imgSrc.fileId = item.imgSrc.fileId || '';
+						//return value
+						var r = item.imgSrc.fileId.slice(-4) == '.svg';
+
+						if(!prx.mask.isActive(item))
+							r = r || true;
+						else
+							r = r || false;
+
+						return r;
+
+					}
 					}
 				]
 			]
-		}, {
+		},
+		{
 			caption: 'Style',
 			properties: [
 				[
@@ -2962,10 +3171,42 @@ prx.types.image = {
 							selector: '.changeProperty-borderWidth',
 							property: 'border-width',
 							transitionable: true
+						},
+						hiddenByDefault: function(item){
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+								return true;
+							else
+								return false;
 						}
 					},
 					{
-						caption: false
+						caption: false,
+						name: 'borderStyle',
+						proptype: 'border-style',
+						type: 'select',
+						value: function(item,name) {
+							if(typeof(item.borderStyle) == "undefined") { item.borderStyle = "solid"; }
+							return item.borderStyle;
+						},
+						values: [{ value: "solid", displayValue: "Solid"},{ value: "dotted", displayValue: "Dotted"},{ value: "dashed", displayValue: "Dashed"},{ value: "double", displayValue: "Double"},{ value: "none", displayValue: "None"}],
+						changeProperty: {
+							caption: 'Border Style',
+							selector: '.changeProperty-borderWidth',
+							property: 'border-style',
+							transitionable: false
+						},
+						hiddenByDefault: function(item) {
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+								return true;
+							else
+								return false;
+						}
+					},
+					prx.commonproperties.borderColor
+				],
+				[
+					{
+						caption: 'Position'
 						,name: 'borderPos'
 						,type: 'select'
 						,value: function(item,name,index) {
@@ -2980,12 +3221,14 @@ prx.types.image = {
 							selector: '.image-inner',
 							property: 'class',
 							transitionable: false
+						},
+						hiddenByDefault: function(item){
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+								return true;
+							else
+								return false;
 						}
 					},
-					prx.commonproperties.borderColor
-				],
-				[
-
 					{
 						caption: 'Radius',
 						name: 'borderRadius',
@@ -3000,8 +3243,15 @@ prx.types.image = {
 							selector: '.changeProperty-borderRadius',
 							property: 'border-radius',
 							transitionable: true
+						},
+						hiddenByDefault: function(item){
+							if(prx.mask.isActive(item) || prx.mask.editModeIsMaskSelected(item))
+								return true;
+							else
+								return false;
 						}
-					}
+					},
+
 				]
 			]
 		},
@@ -3032,7 +3282,13 @@ prx.types.image = {
 	      				,changeProperty: {
 							caption: 'Propagate events',
 							rerender: true
-						 }
+						 },
+						hiddenByDefault: function(item){
+							if(prx.mask.isEditing(item))
+								return true;
+							else
+								return false;
+						}
 	      			}],
 	      			[
 	      		  	{
@@ -3048,11 +3304,18 @@ prx.types.image = {
 	    				,changeProperty: {
 							caption: 'Position fixed',
 							rerender: true
-						 }
+						},
+						hiddenByDefault: function(item){
+							if(prx.mask.isEditing(item))
+								return true;
+							else
+								return false;
+						}
 	      	      	}
 	      	      ]
 	      	      ]
-	      	      }
+		},
+
 
 	      		]
 };
@@ -3077,13 +3340,18 @@ prx.types.placeholder = {
 		//needs the width patenta to correctly calculate width on afterdisplay
 		var cR = '';
 
-		cR += '<div id="' + _id + '" class="pos box type-placeholder" style="width: '+_realw+'px;">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' pos box type-placeholder" style="width: '+_realw+'px;">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<div class="bg liveUpdate-backgroundColor liveUpdate-borderColor changeProperty-backgroundColor changeProperty-borderColor" style="background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; border-color: '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; border-width: '+prx.componentsHelper.getProp(item.thickness,'num-border-width')+'px;"></div>';
 		cR += '<div class="diagonal diagonal1 liveUpdate-borderColor" style="border-color: '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; width: '+_width+'px; -moz-transform: rotate('+_angle1+'deg); -webkit-transform: rotate('+_angle1+'deg); -o-transform: rotate('+_angle1+'deg); transform: rotate('+_angle1+'deg);  border-top-width: '+prx.componentsHelper.getProp(item.thickness,'num-border-width')+'px; left: '+prx.componentsHelper.getProp(item.thickness,'num-other')/2+'px;"></div>'
 		cR += '<div class="diagonal diagonal2 liveUpdate-borderColor" style="border-color: '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; width: '+_width+'px; -moz-transform: rotate(-'+_angle1+'deg); -webkit-transform: rotate(-'+_angle1+'deg); -o-transform: rotate(-'+_angle1+'deg); transform: rotate(-'+_angle1+'deg); border-top-width: '+prx.componentsHelper.getProp(item.thickness,'num-border-width')+'px; right: '+prx.componentsHelper.getProp(item.thickness,'num-other')/2+'px;"></div>'
 		//if(item.text != "") {
 			cR += '<div class="contents" style="position:relative;"><span class="liveUpdate-backgroundColor changeProperty-backgroundColor liveUpdate-textColor" style="text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+';"><span data-editableproperty="text">' + prx.componentsHelper.getProp(item.text,'text-textarea') + '</span></span></div>';
 		//}
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3231,7 +3499,11 @@ prx.types.webview = {
 
 		var cR = '';
 
-		cR += '<div id="' + _id + '" class="box pos type-webview">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-webview">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<div style="overflow: hidden; height: 100%; width: 100%;">';
 		if(!prx.editor && prx.iosmobilebrowser) {
 		cR += '<div class="webview-scroll-wrapper">';
@@ -3241,6 +3513,7 @@ prx.types.webview = {
 		cR += '</div>';
 		}
 		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 
 		return cR;
@@ -3263,8 +3536,8 @@ prx.types.webview = {
 								rerender: true
 							 }
 					    }
-			      ],
-			      [
+				 ],
+			     [
 		              {
 							caption: 'Scrollable?'
 							,name: 'scrollable'
@@ -3280,7 +3553,7 @@ prx.types.webview = {
 				        		rerender: true
 				        	}
 		              }
-	              ]
+	             ]
 			]
 		}
 	]
@@ -3292,7 +3565,13 @@ prx.types.html = {
 	,onDisplay: function(item,containerid) {
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-html"></div>';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-html">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>';
 		return cR;
 	}
 	,afterDisplay: function(item, containerid, pageid) {
@@ -3320,7 +3599,7 @@ prx.types.html = {
 						changeable: true
 					 }
 			    }
-			 ]]
+			]]
 		}
 	]
 };
@@ -3334,13 +3613,18 @@ prx.types.audio = {
 		if(typeof(item.loop)=="undefined") { item.loop = false; }
 
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-audio">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-audio">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<audio '+ ((prx.componentsHelper.getProp(item.controls,'boolean')) ? 'controls' : '') +' '+ ((prx.componentsHelper.getProp(item.preload,'boolean') && !prx.editor) ? 'preload' : 'preload="none"') +' '+ ((prx.componentsHelper.getProp(item.autoplay,'boolean') && !prx.editor) ? 'autoplay' : '') +' '+ ((prx.componentsHelper.getProp(item.loop,'boolean')) ? 'loop' : '') +'>';
 		if(prx.componentsHelper.getProp(item.audioFileMP3.fileId,'other') != '') cR += '<source src="'+prx.componentsHelper.getProp(item.audioFileMP3,'asset')+'" type="audio/mpeg" />';
 		if(prx.componentsHelper.getProp(item.audioFileOGG.fileId,'other') != '') cR += '<source src="'+prx.componentsHelper.getProp(item.audioFileOGG,'asset')+'" type="audio/ogg" />';
 		if(prx.componentsHelper.getProp(item.audioFileWAV.fileId,'other') != '') cR += '<source src="'+prx.componentsHelper.getProp(item.audioFileWAV,'asset')+'" type="audio/x-wav" />';
 		if(prx.componentsHelper.getProp(item.audioFileAAC.fileId,'other') != '') cR += '<source src="'+prx.componentsHelper.getProp(item.audioFileAAC,'asset')+'" type="audio/x-m4a" />';
 		cR += '</audio>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3513,7 +3797,11 @@ prx.types.video = {
 		if(typeof(item.loop)=="undefined") { item.loop = false; }
 
 		var cR = '';
-		cR += '<div id="' + _id + '" class="box pos type-video '+prx.componentsHelper.getProp(item.videoType,'other')+'">';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-video '+prx.componentsHelper.getProp(item.videoType,'other')+'">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		switch(prx.componentsHelper.getProp(item.videoType,'other')) {
 		case 'html5':
 			cR += '<video id="'+_id+'-html5video" class="html5" width="100%" height="100%" '+ ((prx.componentsHelper.getProp(item.controls,'boolean')) ? 'controls' : '') + ((prx.componentsHelper.getProp(item.placeholder.fileId,'other') != '') ? ' poster='+prx.componentsHelper.getProp(item.placeholder,'asset') : '' )+' '+ ((!prx.componentsHelper.getProp(item.preload,'boolean') && !(prx.editor && prx.componentsHelper.getProp(item.autoplay,'boolean'))) ? 'preload="none"' : '') +' '+ ((prx.componentsHelper.getProp(item.autoplay,'boolean') && !prx.editor) ? 'autoplay' : '') +' '+((prx.componentsHelper.getProp(item.loop,'boolean')) ? 'loop' : '')+' webkit-playsinline="true" playsinline="true">';
@@ -3539,6 +3827,7 @@ prx.types.video = {
 			}
 			break;
 		}
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3837,10 +4126,16 @@ prx.types.animationtarget = {
 	,onDisplay: function(item,containerid,pageid,symbol) {
 		var _id = (!containerid) ? item.id : containerid+'-'+item.id;
 		var _dims = prx.componentsHelper.getRealDims(item,symbol);
-		var cR = '<div id="'+_id+'" class="pos box type-animationtarget '+((typeof(item.fixPositioning) != "undefined" && prx.componentsHelper.getProp(item.fixPositioning,'boolean')) ? 'type-animatiotarget-fixed-positioning' : '')+'">'
-		cR += '<div class="animationtarget-circle"></div>'
-		cR += '<div class="animationtarget-horizontal"></div>'
-		cR += '<div class="animationtarget-vertical"></div>'
+		var cR = '';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-animationtarget '+((typeof(item.fixPositioning) != "undefined" && prx.componentsHelper.getProp(item.fixPositioning,'boolean')) ? 'type-animatiotarget-fixed-positioning' : '')+'">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
+		cR += '<div class="animationtarget-circle"></div>';
+		cR += '<div class="animationtarget-horizontal"></div>';
+		cR += '<div class="animationtarget-vertical"></div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 		return cR;
 	}
@@ -3883,24 +4178,26 @@ prx.types.tooltip = {
 		}
 
 
-		var cR = '<div id="'+_id+'" class="box pos type-tooltip">'
-
-		cR += '<style>'
+		var cR = '';
+		cR += '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-tooltip">';
+		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' .tooltip-content-outer { padding-'+prx.componentsHelper.getProp(item.ttDirection,'other')+': '+(12*prx.componentsHelper.getScale(item.lib))+'px; }'
 		cR += '#'+_id+' .tooltip-content { border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'px; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }'
 		cR += '#'+_id+' .tooltip-text { '+_props+' '+prx.componentsHelper.getProp(item.textFont,'font-family')+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; text-align: '+prx.componentsHelper.getProp(item.textAlign,'align')+'; color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; }'
 		cR += '#'+_id+' .tooltip-outer { '+prx.componentsHelper.getProp(item.ttDirection,'other')+': 0; '+_pos+' }'
 		cR += '#'+_id+' .tooltip { background: '+prx.componentsHelper.getProp(_ttBg,'color-background')+'; '+prx.componentsHelper.getProp(item.ttDirection,'other')+': 0; border: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; margin: '+_margin+'; }'
-		cR += '</style>'
-
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<div class="tooltip-content-outer">';
 		cR += '<div class="tooltip-content liveUpdate-borderColor liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-borderColor changeProperty-borderRadius">';
 		cR += '<div class="tooltip-text liveUpdate-textColor changeProperty-textColor changeProperty-textFont"> <span data-editableproperty="text">'+prx.componentsHelper.getProp(item.text,'text-textarea')+'</span></div>'
 		cR += '</div>';
 		cR += '</div>';
 		cR += '<div class="tooltip-outer">';
-		cR += '<div class="tooltip liveUpdate-borderColor liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-borderColor"></div>'
-		cR += '</div>'
+		cR += '<div class="tooltip liveUpdate-borderColor liveUpdate-backgroundColor changeProperty-backgroundColor changeProperty-borderColor"></div>';
+		cR += '</div>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>';
 
 		return cR;
@@ -4034,10 +4331,11 @@ prx.types.basic_tabbar = {
 		var activebg = prx.componentsHelper.getProp(item.activeBackgroundColor,'other')
 		if(activebg == 'as-inactive') { activebg = "rgba(0,0,0,0)"; } // patenta gia ios7
 
-		var cR = '<div id="'+_id+'" class="pos box type-basic-tabbar type-basic-tabbar-icon-'+prx.componentsHelper.getProp(item.iconpos,'other')+'" '+((prx.componentsHelper.getProp(item.overlay,'boolean'))? 'data-mpoverlay="1"': '')+'>';
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-basic-tabbar type-basic-tabbar-icon-'+prx.componentsHelper.getProp(item.iconpos,'other')+'" '+((prx.componentsHelper.getProp(item.overlay,'boolean'))? 'data-mpoverlay="1"': '')+'>';
 		var _tabWidth = Math.floor((_dims.width - prx.componentsHelper.getProp(item.borderWidth,'num-border-width')*(item.tabs.length-1))/item.tabs.length);
 
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' ul { background-color: '+prx.componentsHelper.getProp(item.backgroundColor,'color-background')+'; }'
 		cR += '#'+_id+' li { width: '+_tabWidth+'px; border-left: '+prx.componentsHelper.getProp(item.borderWidth,'num-border-width')+'px solid '+prx.componentsHelper.getProp(item.borderColor,'color-border')+'; }'
 		cR += '#'+_id+' label .caption { color: '+prx.componentsHelper.getProp(item.textColor,'color-text')+'; '+prx.componentsHelper.getProp(item.textFont,'font-family')+' '+_props+'; font-size: '+prx.componentsHelper.getProp(item.textSize,'num-text-size')+'px; }'
@@ -4057,6 +4355,7 @@ prx.types.basic_tabbar = {
 			default: break;
 		}
 		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 
 		cR += '<ul class="liveUpdate-backgroundColor changeProperty-backgroundColor">';
 		$.each(item.tabs, function(i,elm){
@@ -4082,7 +4381,9 @@ prx.types.basic_tabbar = {
 			}
 			cR += '</li>'
 		});
-		cR += '</ul></div>'
+		cR += '</ul>';
+		cR += prx.items.getComponentAppendDivs(item, containerid);
+		cR += '</div>'
 		return cR;
 	}
 	,onResize: function(item,containerid) {
@@ -4539,7 +4840,7 @@ prx.types.basic_tabbar = {
 		      			}
 		      		]]
 		      	}
-              ]
+			]
 	}
 }
 
@@ -4558,16 +4859,17 @@ prx.types.generic_onoffswitch = {
 			_active = 'checked="checked"';
 		}
 
-		var cR = '<div id="' + _id + '" class="box pos type-generic-onoffswitch">'
+		var cR = '<div id="' + _id + '" ' + prx.items.getComponentBaseAttributes(item, containerid) + ' class="' + prx.items.getComponentBaseClasses(item, containerid) + ' box pos type-generic-onoffswitch">'
 
 		cR += '<style>';
+		cR += prx.items.getComponentBaseStyle(item, containerid);
 		cR += '#'+_id+' label { border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'px;}'
 		cR += '#'+_id+' .onoffswitch-inner div { line-height: '+(item.height-(4*prx.componentsHelper.getScale(item.lib)))+'px; }'
 		cR += '#'+_id+' .onoffswitch-inner .active { background-color: '+prx.componentsHelper.getProp(item.activeLabelColor,'color-background')+'; color: '+prx.componentsHelper.getProp(item.activeLabelTextColor,'color-text')+'; }'
 		cR += '#'+_id+' .onoffswitch-inner .inactive { background-color: '+prx.componentsHelper.getProp(item.inactiveLabelColor,'color-background')+'; color: '+prx.componentsHelper.getProp(item.inactiveLabelTextColor,'color-text')+'; }'
 		cR += '#'+_id+' .onoffswitch-switch { background-color: '+prx.componentsHelper.getProp(item.switchColor,'color-background')+'; width: '+prx.componentsHelper.getProp(item.switchSize,'num-other')+'px; border-radius: '+prx.componentsHelper.getProp(item.borderRadius,'num-border-radius')+'px; margin: '+((item.height - prx.componentsHelper.getProp(item.switchSize,'num-other'))/2)+'px; right: '+(item.width-(Number(item.switchSize) + 4 + (item.height - Number(item.switchSize))))+'px; }'
-		cR += '</style>'
-
+		cR += '</style>';
+		cR += prx.items.getComponentPrependDivs(item, containerid);
 		cR += '<input type="checkbox" '+_active+ ' id="'+_id+'-onoffswitch" data-role="none" >'
 		cR += '<label for="'+_id+'-onoffswitch">'
 		cR += '<div class="onoffswitch-inner">'
@@ -4576,6 +4878,7 @@ prx.types.generic_onoffswitch = {
 		cR += '</div>'
 		cR += '<div class="onoffswitch-switch"></div>'
 		cR += '</label>'
+		cR += prx.items.getComponentAppendDivs(item, containerid);
 		cR += '</div>'
 
 		return cR;
@@ -4938,8 +5241,9 @@ prx.components.placeholder = {
 	,text: 'Placeholder'
 	,textSize: 16*prx.componentsHelper.getScale(_library)
 	,textAlign: 'center'
+	,textColor: '666666'
 	,backgroundColor: 'ffffff'
-	,borderColor: '555555'
+	,borderColor: '999999'
 	,thickness: 1*prx.componentsHelper.getScale(_library)
 	,actions:[]
 }
